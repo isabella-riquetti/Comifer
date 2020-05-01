@@ -9,8 +9,6 @@ D:\Projetos\Comifer\Projetos\Comifer.ADM\Comifer.ADM\Comifer.ADM\bin\Debug\netco
 D:\Projetos\Comifer\Projetos\Comifer.ADM\Comifer.ADM\Comifer.ADM\bin\Debug\netcoreapp3.1\Comifer.ADM.pdb
 D:\Projetos\Comifer\Projetos\Comifer.ADM\Comifer.ADM\Comifer.ADM\bin\Debug\netcoreapp3.1\Comifer.ADM.Views.dll
 D:\Projetos\Comifer\Projetos\Comifer.ADM\Comifer.ADM\Comifer.ADM\bin\Debug\netcoreapp3.1\Comifer.ADM.Views.pdb
-D:\Projetos\Comifer\Projetos\Comifer.ADM\Comifer.ADM\Comifer.ADM\obj\Debug\netcoreapp3.1\Comifer.ADM.csproj.CoreCompileInputs.cache
-D:\Projetos\Comifer\Projetos\Comifer.ADM\Comifer.ADM\Comifer.ADM\obj\Debug\netcoreapp3.1\Comifer.ADM.MvcApplicationPartsAssemblyInfo.cache
 D:\Projetos\Comifer\Projetos\Comifer.ADM\Comifer.ADM\Comifer.ADM\obj\Debug\netcoreapp3.1\Comifer.ADM.RazorAssemblyInfo.cache
 D:\Projetos\Comifer\Projetos\Comifer.ADM\Comifer.ADM\Comifer.ADM\obj\Debug\netcoreapp3.1\Comifer.ADM.RazorAssemblyInfo.cs
 D:\Projetos\Comifer\Projetos\Comifer.ADM\Comifer.ADM\Comifer.ADM\obj\Debug\netcoreapp3.1\Comifer.ADM.AssemblyInfoInputs.cache
@@ -34,3 +32,6 @@ D:\Projetos\Comifer\Projetos\Comifer.ADM\Comifer.ADM\Comifer.ADM\obj\Debug\netco
 D:\Projetos\Comifer\Projetos\Comifer.ADM\Comifer.ADM\Comifer.ADM\obj\Debug\netcoreapp3.1\Comifer.ADM.pdb
 D:\Projetos\Comifer\Projetos\Comifer.ADM\Comifer.ADM\Comifer.ADM\obj\Debug\netcoreapp3.1\Comifer.ADM.genruntimeconfig.cache
 D:\Projetos\Comifer\Projetos\Comifer.ADM\Comifer.ADM\Comifer.ADM\obj\Debug\netcoreapp3.1\Comifer.ADM.csproj.CopyComplete
+D:\Projetos\Comifer\Projetos\Comifer.ADM\Comifer.ADM\Comifer.ADM\obj\Debug\netcoreapp3.1\Comifer.ADM.csprojAssemblyReference.cache
+D:\Projetos\Comifer\Projetos\Comifer.ADM\Comifer.ADM\Comifer.ADM\obj\Debug\netcoreapp3.1\Comifer.ADM.csproj.CoreCompileInputs.cache
+D:\Projetos\Comifer\Projetos\Comifer.ADM\Comifer.ADM\Comifer.ADM\obj\Debug\netcoreapp3.1\Comifer.ADM.MvcApplicationPartsAssemblyInfo.cache
