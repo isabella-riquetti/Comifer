@@ -22,23 +22,25 @@ namespace Comifer.ADM.Controllers
 
         public IActionResult Principal()
         {
-            var aux = _customerService.GetCustomersCount();
             var viewModel = new DashboardViewModel()
             {
-                Customer = new DashboardItemViewModel()
+                Customers = new DashboardItemViewModel()
                 {
-                    CurrentValue = aux,
+                    CurrentValue = 1,
                     Growth = 100
                 },
-                ProductParent = new DashboardItemViewModel()
+                Orders = new DashboardItemViewModel()
                 {
-                    CurrentValue = 10,
-                    Growth = 85
+                    CurrentValue = 16,
+                    Growth = 50
                 },
-                Product = new DashboardItemViewModel()
+                ProductParents = new DashboardItemViewModel()
                 {
-                    CurrentValue = 10,
-                    Growth = 57
+                    CurrentValue = 10
+                },
+                Products = new DashboardItemViewModel()
+                {
+                    CurrentValue = 10
                 },
             };
             return View(viewModel);

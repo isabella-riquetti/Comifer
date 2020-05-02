@@ -7,49 +7,49 @@ using System.Linq;
 
 namespace Comifer.ADM.Services
 {
-    public class CustomerService : ICustomerService
+    public class ImageService : IImageService
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        public CustomerService(IUnitOfWork unitOfWork)
+        public ImageService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
 
-        public List<Customer> GetAll()
+        public List<Image> GetAllByReferId(Guid referId)
         {
-            var customers = _unitOfWork.Customer.Get().ToList();
-            return customers;
+            var images = _unitOfWork.Image.Get().ToList();
+            return images;
         }
 
-        public Customer Get(Guid id)
+        public Image Get(Guid id)
         {
-            var customer = _unitOfWork.Customer.FirstOrDefault(b => b.Id == id);
-            return customer;
+            var image = _unitOfWork.Image.FirstOrDefault(b => b.Id == id);
+            return image;
         }
 
-        public NotificationViewModel Edit(Customer customer)
+        public NotificationViewModel Edit(Image image)
         {
-            _unitOfWork.Customer.Edit(customer);
+            _unitOfWork.Image.Edit(image);
             _unitOfWork.Commit();
             return new NotificationViewModel()
             {
                 Status = true,
                 Title = "Sucesso!",
-                Message = "Cliente editado com sucesso."
+                Message = "Imagem editada com sucesso."
             };
         }
 
-        public NotificationViewModel Create(Customer customer)
+        public NotificationViewModel Create(Image image)
         {
-            customer.Id = Guid.NewGuid();
-            _unitOfWork.Customer.Add(customer);
+            image.Id = Guid.NewGuid();
+            _unitOfWork.Image.Add(image);
             _unitOfWork.Commit();
             return new NotificationViewModel()
             {
                 Status = true,
                 Title = "Sucesso!",
-                Message = "Cliente criado com sucesso."
+                Message = "Imagem inserida com com sucesso."
             };
         }
     }

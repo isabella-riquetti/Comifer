@@ -7,49 +7,49 @@ using System.Linq;
 
 namespace Comifer.ADM.Services
 {
-    public class CustomerService : ICustomerService
+    public class ProductService : IProductService
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        public CustomerService(IUnitOfWork unitOfWork)
+        public ProductService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
 
-        public List<Customer> GetAll()
+        public List<Product> GetAll()
         {
-            var customers = _unitOfWork.Customer.Get().ToList();
-            return customers;
+            var categories = _unitOfWork.Product.Get().ToList();
+            return categories;
         }
 
-        public Customer Get(Guid id)
+        public Product Get(Guid id)
         {
-            var customer = _unitOfWork.Customer.FirstOrDefault(b => b.Id == id);
-            return customer;
+            var category = _unitOfWork.Product.FirstOrDefault(b => b.Id == id);
+            return category;
         }
 
-        public NotificationViewModel Edit(Customer customer)
+        public NotificationViewModel Edit(Product product)
         {
-            _unitOfWork.Customer.Edit(customer);
+            _unitOfWork.Product.Edit(product);
             _unitOfWork.Commit();
             return new NotificationViewModel()
             {
                 Status = true,
                 Title = "Sucesso!",
-                Message = "Cliente editado com sucesso."
+                Message = "Produto editada com sucesso."
             };
         }
 
-        public NotificationViewModel Create(Customer customer)
+        public NotificationViewModel Create(Product product)
         {
-            customer.Id = Guid.NewGuid();
-            _unitOfWork.Customer.Add(customer);
+            product.Id = Guid.NewGuid();
+            _unitOfWork.Product.Add(product);
             _unitOfWork.Commit();
             return new NotificationViewModel()
             {
                 Status = true,
                 Title = "Sucesso!",
-                Message = "Cliente criado com sucesso."
+                Message = "Produto criada com sucesso."
             };
         }
     }

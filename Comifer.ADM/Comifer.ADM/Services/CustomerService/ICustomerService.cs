@@ -1,7 +1,15 @@
-﻿namespace Comifer.ADM.Services
+﻿using Comifer.ADM.ViewModels;
+using Comifer.Data.Models;
+using System;
+using System.Collections.Generic;
+
+namespace Comifer.ADM.Services
 {
     public interface ICustomerService
     {
-        int GetCustomersCount();
+        List<Customer> GetAll();
+        Customer Get(Guid id);
+        NotificationViewModel Edit(Customer customer);
+        NotificationViewModel Create(Customer customer);
     }
 }
