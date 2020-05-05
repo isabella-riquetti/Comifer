@@ -15,17 +15,12 @@ namespace Comifer.ADM.Controllers
             _providerService = providerService;
         }
 
-        public IActionResult Principal()
+        public IActionResult Principal(Guid? idFornecedor)
         {
-            var brands = _brandService.GetAll();
-            return View(brands);
-        }
+            ViewBag.ProviderId = idFornecedor;
+            ViewBag.Providers = _providerService.GetSelectListWithAll();
 
-        public IActionResult DoFornecedor(Guid providerId, string providerName)
-        {
-            ViewBag.ProviderId = providerId;
-            ViewBag.ProviderName = providerName;
-            var brands = _brandService.GetByProviderId(providerId);
+            var brands = _brandService.GetAll(idFornecedor);
             return View(brands);
         }
 
@@ -35,44 +30,45 @@ namespace Comifer.ADM.Controllers
             return View(brand);
         }
 
-        public IActionResult Criar(Guid? providerId)
+        public IActionResult Incluir()
         {
             ViewBag.Providers = _providerService.GetSelectList();
-            ViewBag.ProviderId = providerId;
+
             return View();
         }
 
         [HttpPost]
-        public IActionResult Criar(Data.Models.Brand categoria)
+        public IActionResult Incluir(Data.Models.Brand brand)
         {
             if (!ModelState.IsValid)
             {
                 ViewBag.Providers = _providerService.GetSelectList();
-                return View(categoria);
+                return View(brand);
             }
 
-            var result = _brandService.Create(categoria);
+            var result = _brandService.Create(brand);
             TempData.Put("Notification", result);
             return RedirectToAction("Principal");
         }
 
         public IActionResult Editar(Guid id)
         {
-            var category = _brandService.Get(id);
             ViewBag.Providers = _providerService.GetSelectList();
+
+            var category = _brandService.Get(id);
             return View(category);
         }
 
         [HttpPost]
-        public IActionResult Editar(Data.Models.Brand categoria)
+        public IActionResult Editar(Data.Models.Brand brand)
         {
             if (!ModelState.IsValid)
             {
                 ViewBag.Providers = _providerService.GetSelectList();
-                return View(categoria);
+                return View(brand);
             }
 
-            var result = _brandService.Edit(categoria);
+            var result = _brandService.Edit(brand);
             TempData.Put("Notification", result);
             return RedirectToAction("Principal");
         }

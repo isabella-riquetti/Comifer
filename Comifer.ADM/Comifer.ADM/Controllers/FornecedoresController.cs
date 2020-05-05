@@ -25,13 +25,13 @@ namespace Comifer.ADM.Controllers
             return View(category);
         }
 
-        public IActionResult Criar()
+        public IActionResult Incluir()
         {
             return View();
         }
 
         [HttpPost]
-        public IActionResult Criar(Data.Models.Provider categoria)
+        public IActionResult Incluir(Data.Models.Provider categoria)
         {
             if (!ModelState.IsValid)
             {

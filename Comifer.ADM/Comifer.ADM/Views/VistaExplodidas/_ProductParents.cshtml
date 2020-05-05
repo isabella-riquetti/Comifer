@@ -1,0 +1,50 @@
+﻿@model List<Comifer.ADM.ViewModels.DetailedProductParentViewModel>
+@{
+    Layout = null;
+}
+<div class="table-responsive">
+    <table class="table align-items-center table-flush">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col" class="sort" data-sort="name">Nome</th>
+                <th scope="col" class="sort text-center" data-sort="brands">Marcas</th>
+                <th scope="col" class="sort text-center" data-sort="categories">Categoria</th>
+                <th scope="col" class="sort text-center" data-sort="products">Qtd. de Produtos</th>
+                <th scope="col" class="text-center" width="200px">Ações</th>
+            </tr>
+        </thead>
+        <tbody class="list">
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="name">
+                        @item.Name
+                    </td>
+                    <td class="brands text-center">
+                        @item.BrandName
+                    </td>
+                    <td class="categories text-center">
+                        @item.CategoryName
+                    </td>
+                    <td class="products text-center">
+                        @item.ProductCount
+                    </td>
+                    <td class="text-right text-center">
+                        <a class="btn btn-sm btn-outline-primary" href="@Url.Action("Editar", "VistaExplodidas", new { id = @item.Id })" role="button">
+                            <i class="fas fa-edit"></i> Editar
+                        </a>
+                        <a class="btn btn-sm btn-outline-success" href="@Url.Action("IncluirArquivos", "VistaExplodidas", new { id = @item.Id })" role="button">
+                            <i class="fas fa-upload"></i> Arquivos
+                        </a>
+                        <a class="btn btn-sm btn-outline-info" href="@Url.Action("Detalhes", "VistaExplodidas", new { id = @item.Id })" role="button">
+                            <i class="fa fa-search"></i> Detalhes
+                        </a>
+                        <a class="btn btn-sm btn-outline-dark" href="@Url.Action("Principal", "Produtos", new { idMaquina = @item.Id })" role="button">
+                            <i class="fa fa-tools"></i> Máquinas
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

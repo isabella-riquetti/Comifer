@@ -1,5 +1,6 @@
 ﻿using System;
 using Comifer.ADM.Services;
+using Comifer.ADM.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Comifer.ADM.Controllers
@@ -25,13 +26,13 @@ namespace Comifer.ADM.Controllers
             return View(category);
         }
 
-        public IActionResult Criar()
+        public IActionResult Incluir()
         {
             return View();
         }
 
         [HttpPost]
-        public IActionResult Criar(Data.Models.Category categoria)
+        public IActionResult Incluir(Data.Models.Category categoria)
         {
             if (!ModelState.IsValid)
             {
@@ -61,5 +62,23 @@ namespace Comifer.ADM.Controllers
             TempData.Put("Notification", result);
             return RedirectToAction("Principal");
         }
+
+        //public IActionResult Deletar(Guid id)
+        //{
+        //    var category = _categoryService.GetDetailed(id);
+        //    return View(category);
+        //}
+
+        //[HttpPost]
+        //public IActionResult Deletar(DetailedCategoryViewModel categoria)
+        //{
+        //    var result = _categoryService.Delete(categoria.Id);
+        //    TempData.Put("Notification", result);
+        //    if(result.Status)
+        //    {
+        //        return RedirectToAction("Principal");
+        //    }
+        //    return RedirectToAction("Deletar", categoria);
+        //}
     }
 }

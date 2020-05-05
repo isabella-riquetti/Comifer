@@ -36,10 +36,10 @@
                         <a class="btn btn-sm btn-outline-info" href="@Url.Action("Detalhes", "Marcas", new { id = @item.Id })" role="button">
                             <i class="fa fa-search"></i> Detalhes
                         </a>
-                        <a class="btn btn-sm btn-outline-dark" href="@Url.Action("Principal", "Maquinas", new { categoryId = @item.Id, categoryName = @item.Name })" role="button">
+                        <a class="btn btn-sm btn-outline-dark" href="@Url.Action("Principal", "Maquinas", new { idMarca = @item.Id })" role="button">
                             <i class="fa fa-tools"></i> Máquinas
                         </a>
-                        <a class="btn btn-sm btn-outline-dark" href="@Url.Action("Principal", "Pecas", new { categoryId = @item.Id, categoryName = @item.Name })" role="button">
+                        <a class="btn btn-sm btn-outline-dark" href="@Url.Action("Principal", "Pecas", new { idMarca = @item.Id })" role="button">
                             <i class="fa fa-cogs"></i> Peças
                         </a>
                     </td>

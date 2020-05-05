@@ -1,0 +1,99 @@
+﻿@model Comifer.ADM.ViewModels.ProductParentWithFileViewModel
+@{
+    ViewData["Title"] = "Incluir Arquivo em Vista Explodida";
+}
+
+@section header {
+    <div class="row align-items-center py-4">
+        <div class="col-lg-6 col-7">
+            <h6 class="h2 text-white d-inline-block mb-0">Incluir Arquivo em Vista Explodida</h6>
+            <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                    <li class="breadcrumb-item"><a href="@Url.Action("Principal", "Inicio")"><i class="fas fa-home"></i> Inicio</a></li>
+                    <li class="breadcrumb-item"><a href="@Url.Action("Principal", "VistaExplodidas")">Vista Explodida</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Incluir Arquivo</li>
+                </ol>
+            </nav>
+        </div>
+        <div class="col-lg-6 col-5 text-right">
+            <a href="@Url.Action("Principal","VistaExplodidas")" class="btn btn-sm btn-neutral">Lista de Vista Explodidas</a>
+        </div>
+    </div>
+}
+
+<div class="col-xl-8 order-xl-1">
+    <div class="card">
+        <div class="card-header">
+            <div class="row align-items-center">
+                <div class="col-8">
+                    <h3 class="mb-0">Vista Explodida</h3>
+                </div>
+                <div class="col-4">
+                    <a href="@Url.Action("Editar", "VistaExplodidas", new { id = Model.Id })" class="btn btn-primary btn-sm pull-right">
+                        <i class="fa fa-edit"></i> Editar
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="card-body detailment">
+            <div class="form-group">
+                @Html.LabelFor(m => m.Name)
+                @Html.DisplayFor(m => m.Name)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Code)
+                @Html.DisplayFor(m => m.Code)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.CategoryId)
+                @Html.DisplayFor(m => m.CategoryName)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.BrandId)
+                @Html.DisplayFor(m => m.BrandName)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.ProductCount)
+                @Html.DisplayFor(m => m.ProductCount)
+            </div>
+            <div class="form-group">
+                @Html.Label("Arquivos atuais")
+                @foreach (var item in Model.Files)
+                {
+                    <div class="mt-1 mb-1">
+                        <a href="@Url.Action("Remove", "File", new { referId = @item.Id, controllerName = "VistaExplodidas" })" class="btn btn-outline-danger btn-sm mr-1 ml-1" onclick="return confirm('Está ação não pode ser revertida. Você tem certeza que deseja continuar e excluir este arquivo?')">
+                            <i class="fa fa-trash"></i>
+                        </a>
+                        <a href="@Url.Action("Download", "File", new { referId = @item.Id })" class="ml-1 mt-3">
+                            <i class="fa fa-download mr-1"></i> @String.Concat(item.FileName)
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-xl-4 order-xl-1">
+    <div class="card">
+        <div class="card-header">
+            <div class="row align-items-center">
+                <div class="col-12">
+                    <h3 class="mb-0">Enviar arquivos</h3>
+                </div>
+            </div>
+        </div>
+        <div class="card-body detailment">
+            @using (Html.BeginForm("UploadFile", "File", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="form-group">
+                    @Html.Hidden("referId", Model.Id)
+                    @Html.Hidden("tableName", "ProductParent")
+                    @Html.Hidden("controllerName", "VistaExplodidas")
+                    <input type="file" name="files" id="files" multiple />
+                    <input type="submit" class="btn btn-primary btn-sm pull-right mt-2" />
+                </div>
+            }
+        </div>
+    </div>
+</div>

@@ -5,10 +5,10 @@ namespace Comifer.ADM.ViewModels
 {
     public class DetailedCategoryViewModel : Category
     {
-        [Display(Name = "Qtd. de Máquinas da Categoria")]
+        [Display(Name = "Qtd. de Máquinas")]
         public int ProductParentCount => ProductParents.Count;
 
-        [Display(Name = "Qtd. de Peças da Categoria")]
+        [Display(Name = "Qtd. de Peças")]
         public int ProductCount => Products.Count;
     }
 }

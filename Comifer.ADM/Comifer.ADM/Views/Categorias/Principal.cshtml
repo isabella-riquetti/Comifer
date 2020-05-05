@@ -1,6 +1,6 @@
 ﻿@model List<Comifer.ADM.ViewModels.DetailedCategoryViewModel>
 @{
-    ViewData["Title"] = "Lista de Categorias";
+    ViewData["Title"] = "Lista de Vista Explodidas";
 }
 
 @section header {
@@ -15,7 +15,7 @@
             </nav>
         </div>
         <div class="col-lg-6 col-5 text-right">
-            <a href="@Url.Action("Criar","Categorias")" class="btn btn-sm btn-neutral">Nova</a>
+            <a href="@Url.Action("Incluir","Categorias")" class="btn btn-sm btn-neutral">Nova</a>
         </div>
     </div>
 }
@@ -55,10 +55,13 @@
                                 <a class="btn btn-sm btn-outline-info" href="@Url.Action("Detalhes", "Categorias", new { id = @item.Id })" role="button">
                                     <i class="fa fa-search"></i> Detalhes
                                 </a>
-                                <a class="btn btn-sm btn-outline-dark" href="@Url.Action("Principal", "Maquinas", new { categoryId = @item.Id, categoryName = @item.Name })" role="button">
+                                @*<a class="btn btn-sm btn-outline-danger" href="@Url.Action("Deletar", "Categorias", new { id = @item.Id })" role="button">
+                                    <i class="fa fa-trash-alt"></i> Deletar
+                                </a>*@
+                                <a class="btn btn-sm btn-outline-dark" href="@Url.Action("Principal", "Maquinas", new { idCategoria = @item.Id })" role="button">
                                     <i class="fa fa-tools"></i> Máquinas
                                 </a>
-                                <a class="btn btn-sm btn-outline-dark" href="@Url.Action("Principal", "Pecas", new { categoryId = @item.Id, categoryName = @item.Name })" role="button">
+                                <a class="btn btn-sm btn-outline-dark" href="@Url.Action("Principal", "Pecas", new { idCategoria = @item.Id })" role="button">
                                     <i class="fa fa-cogs"></i> Peças
                                 </a>
                             </td>

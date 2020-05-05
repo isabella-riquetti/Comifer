@@ -1,6 +1,7 @@
 ﻿using Comifer.ADM.ViewModels;
 using Comifer.Data.Models;
 using Comifer.Data.UnitOfWork;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -73,6 +74,42 @@ namespace Comifer.ADM.Services
                 Title = "Sucesso!",
                 Message = "Categoria criada com sucesso."
             };
+        }
+
+        //public NotificationViewModel Delete(Guid id)
+        //{
+        //    try
+        //    {
+        //        var category = Get(id);
+        //        _unitOfWork.Category.Delete(category);
+        //        return new NotificationViewModel()
+        //        {
+        //            Status = true,
+        //            Title = "Sucesso!",
+        //            Message = "Categoria deletada com sucesso."
+        //        };
+        //    }
+        //    catch(Exception ex)
+        //    {
+        //        return new NotificationViewModel()
+        //        {
+        //            Status = false,
+        //            Title = "Erro!",
+        //            Message = "Não é possível deletar categoria que já é utilizada."
+        //        };
+        //    }
+        //}
+
+        public List<SelectListItem> GetSelectList()
+        {
+            var result = _unitOfWork.Category.Get().ToSelectList(p => p.Id.ToString(), p => p.Name);
+            return result;
+        }
+
+        public List<SelectListItem> GetSelectListWithAll()
+        {
+            var result = _unitOfWork.Category.Get().ToSelectListAndAll(p => p.Id.ToString(), p => p.Name);
+            return result;
         }
     }
 }

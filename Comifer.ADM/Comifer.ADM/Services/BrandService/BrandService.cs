@@ -1,6 +1,7 @@
 ﻿using Comifer.ADM.ViewModels;
 using Comifer.Data.Models;
 using Comifer.Data.UnitOfWork;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,26 +17,9 @@ namespace Comifer.ADM.Services
             _unitOfWork = unitOfWork;
         }
 
-        public List<DetailedBrandViewModel> GetAll()
+        public List<DetailedBrandViewModel> GetAll(Guid? providerId)
         {
-            var brands = _unitOfWork.Brand.Get()
-                .Select(p => new DetailedBrandViewModel()
-                {
-                    Id = p.Id,
-                    Name = p.Name,
-                    ProductParents = p.ProductParents,
-                    Provider = p.Provider,
-                    ProviderId = p.ProviderId,
-                    Products = p.Products,
-                    SiteUrl = p.SiteUrl
-                })
-                .ToList();
-            return brands;
-        }
-
-        public List<DetailedBrandViewModel> GetByProviderId(Guid providerId)
-        {
-            var brands = _unitOfWork.Brand.Get(b => b.ProviderId == providerId)
+            var brands = _unitOfWork.Brand.Get(b => providerId == null || b.ProviderId == providerId)
                 .Select(p => new DetailedBrandViewModel()
                 {
                     Id = p.Id,
@@ -96,6 +80,18 @@ namespace Comifer.ADM.Services
                 Title = "Sucesso!",
                 Message = "Marca criada com sucesso."
             };
+        }
+
+        public List<SelectListItem> GetSelectList()
+        {
+            var result = _unitOfWork.Brand.Get().ToSelectList(p => p.Id.ToString(), p => p.Name);
+            return result;
+        }
+
+        public List<SelectListItem> GetSelectListWithAll()
+        {
+            var result = _unitOfWork.Brand.Get().ToSelectListAndAll(p => p.Id.ToString(), p => p.Name);
+            return result;
         }
     }
 }

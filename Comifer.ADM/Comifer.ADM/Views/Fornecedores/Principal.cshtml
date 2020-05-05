@@ -15,7 +15,7 @@
             </nav>
         </div>
         <div class="col-lg-6 col-5 text-right">
-            <a href="@Url.Action("Criar","Fornecedores")" class="btn btn-sm btn-neutral">Novo</a>
+            <a href="@Url.Action("Incluir","Fornecedores")" class="btn btn-sm btn-neutral">Novo</a>
         </div>
     </div>
 }
@@ -55,7 +55,7 @@
                                 <a class="btn btn-sm btn-outline-info" href="@Url.Action("Detalhes", "Fornecedores", new { id = @item.Id })" role="button">
                                     <i class="fa fa-search"></i> Detalhes
                                 </a>
-                                <a class="btn btn-sm btn-outline-dark" href="@Url.Action("DoFornecedor", "Marcas", new { providerId = @item.Id, providerName = @item.Name })" role="button">
+                                <a class="btn btn-sm btn-outline-dark" href="@Url.Action("Principal", "Marcas", new { idFornecedor = @item.Id })" role="button">
                                     <i class="fa fa-copyright"></i> Marcas
                                 </a>
                             </td>

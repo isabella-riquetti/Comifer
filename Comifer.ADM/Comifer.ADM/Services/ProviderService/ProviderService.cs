@@ -82,5 +82,11 @@ namespace Comifer.ADM.Services
             var result = _unitOfWork.Provider.Get().ToSelectList(p => p.Id.ToString(), p => p.Name);
             return result;
         }
+
+        public List<SelectListItem> GetSelectListWithAll()
+        {
+            var result = _unitOfWork.Provider.Get().ToSelectListAndAll(p => p.Id.ToString(), p => p.Name);
+            return result;
+        }
     }
 }

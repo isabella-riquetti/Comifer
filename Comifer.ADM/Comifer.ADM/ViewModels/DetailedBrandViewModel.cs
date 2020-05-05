@@ -5,13 +5,12 @@ namespace Comifer.ADM.ViewModels
 {
     public class DetailedBrandViewModel : Brand
     {
-        [Display(Name = "Nome do Provedor")]
         public string ProviderName => Provider.Name;
 
-        [Display(Name = "Qtd. de Máquinas da Categoria")]
+        [Display(Name = "Qtd. de Máquinas")]
         public int ProductParentCount => ProductParents.Count;
 
-        [Display(Name = "Qtd. de Peças da Categoria")]
+        [Display(Name = "Qtd. de Peças")]
         public int ProductCount => Products.Count;
     }
 }

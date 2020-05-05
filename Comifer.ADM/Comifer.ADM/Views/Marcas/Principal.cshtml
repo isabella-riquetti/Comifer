@@ -15,7 +15,7 @@
             </nav>
         </div>
         <div class="col-lg-6 col-5 text-right">
-            <a href="@Url.Action("Criar","Marcas")" class="btn btn-sm btn-neutral">Nova</a>
+            <a href="@Url.Action("Incluir","Marcas")" class="btn btn-sm btn-neutral">Nova</a>
         </div>
     </div>
 }
@@ -23,8 +23,28 @@
 <div class="col">
     <div class="card">
         <div class="card-header border-0">
-            <h3 class="mb-0">Todas as Marcas</h3>
+            <h2 class="mb-0 pb-4">Marcas</h2>
+            @using (@Html.BeginForm("Principal", "Marcas"))
+            {
+                <div class="row filter">
+                    <div class="col-12 pb-2">
+                        <label for="ProviderId">Fornecedor:</label>
+                        @Html.DropDownList("idFornecedor", new List<SelectListItem>(ViewBag.Providers), new { @class = "form-control" })
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary pull-right">Filtrar</button>
+            }
         </div>
         @await Html.PartialAsync("_Brands", Model)
     </div>
 </div>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            if ('@ViewBag.ProviderId' != '') {
+                $("#idFornecedor").val('@ViewBag.ProviderId');
+            }
+        });
+    </script>
+}

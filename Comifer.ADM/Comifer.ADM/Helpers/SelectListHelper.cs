@@ -29,5 +29,18 @@ namespace Comifer.ADM
                 });
             return d;
         }
+
+        public static List<SelectListItem> ToSelectListAndAll<T>(this IEnumerable<T> source, Func<T, string> valueSelector, Func<T, string> textSelector)
+        {
+            List<SelectListItem> d = new List<SelectListItem>();
+            d.Add(new SelectListItem() { Text = "Todos (as)" });
+            foreach (T element in source)
+                d.Add(new SelectListItem()
+                {
+                    Value = valueSelector(element),
+                    Text = textSelector(element)
+                });
+            return d;
+        }
     }
 }

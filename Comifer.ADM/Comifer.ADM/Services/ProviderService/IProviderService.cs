@@ -14,5 +14,6 @@ namespace Comifer.ADM.Services
         NotificationViewModel Edit(Provider provider);
         NotificationViewModel Create(Provider provider);
         List<SelectListItem> GetSelectList();
+        List<SelectListItem> GetSelectListWithAll();
     }
 }
