@@ -1,6 +1,6 @@
 ﻿@model List<Comifer.ADM.ViewModels.DetailedCategoryViewModel>
 @{
-    ViewData["Title"] = "Lista de Vista Explodidas";
+    ViewData["Title"] = "Lista de Categorias";
 }
 
 @section header {
@@ -23,15 +23,14 @@
 <div class="col">
     <div class="card">
         <div class="card-header border-0">
-            <h3 class="mb-0">Lista</h3>
+            <h3 class="mb-0">Lista de Categorias</h3>
         </div>
         <div class="table-responsive">
             <table class="table align-items-center table-flush">
                 <thead class="thead-light">
                     <tr>
                         <th scope="col" class="sort" data-sort="name">Nome</th>
-                        <th scope="col" class="sort text-center" data-sort="productparents">Qtd. de Máquinas na Categoria</th>
-                        <th scope="col" class="sort text-center" data-sort="products">Qtd. de Peças na Categoria</th>
+                        <th scope="col" class="sort text-center" data-sort="productparents">Qtd. Vistas Explodidas</th>
                         <th scope="col" class="text-center" width="200px">Ações</th>
                     </tr>
                 </thead>
@@ -45,9 +44,6 @@
                             <td class="productparents text-center">
                                 @item.ProductParentCount
                             </td>
-                            <td class="products text-center">
-                                @item.ProductCount
-                            </td>
                             <td class="text-right text-center">
                                 <a class="btn btn-sm btn-outline-primary" href="@Url.Action("Editar", "Categorias", new { id = @item.Id })" role="button">
                                     <i class="fas fa-edit"></i> Editar
@@ -55,14 +51,8 @@
                                 <a class="btn btn-sm btn-outline-info" href="@Url.Action("Detalhes", "Categorias", new { id = @item.Id })" role="button">
                                     <i class="fa fa-search"></i> Detalhes
                                 </a>
-                                @*<a class="btn btn-sm btn-outline-danger" href="@Url.Action("Deletar", "Categorias", new { id = @item.Id })" role="button">
-                                    <i class="fa fa-trash-alt"></i> Deletar
-                                </a>*@
-                                <a class="btn btn-sm btn-outline-dark" href="@Url.Action("Principal", "Maquinas", new { idCategoria = @item.Id })" role="button">
-                                    <i class="fa fa-tools"></i> Máquinas
-                                </a>
-                                <a class="btn btn-sm btn-outline-dark" href="@Url.Action("Principal", "Pecas", new { idCategoria = @item.Id })" role="button">
-                                    <i class="fa fa-cogs"></i> Peças
+                                <a class="btn btn-sm btn-outline-dark" href="@Url.Action("Principal", "VistasExplodidas", new { idCategoria = @item.Id })" role="button">
+                                    <i class="fa fa-tools"></i> Vistas Explodidas
                                 </a>
                             </td>
                         </tr>

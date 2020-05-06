@@ -24,16 +24,16 @@ namespace Comifer.ADM.Controllers
             return RedirectToAction("Principal", controllerName);
         }
 
-        public IActionResult Remove(Guid referId, string controllerName)
+        public IActionResult Remove(Guid id, Guid referId, string controllerName)
         {
-            var result = _fileService.Remove(referId);
+            var result = _fileService.Remove(id);
             TempData.Put("Notification", result);
-            return RedirectToAction("Principal", controllerName);
+            return RedirectToAction("Editar", controllerName, new { id = referId });
         }
 
-        public FileResult Download(Guid referId)
+        public FileResult Download(Guid id)
         {
-            var file = _fileService.Get(referId);
+            var file = _fileService.Get(id);
             byte[] fileBytes = file.FileBytes;
             string fileName = file.FileName;
             return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);

@@ -30,62 +30,58 @@ namespace Comifer.ADM.Services
             return image;
         }
 
-        public NotificationViewModel Edit(Data.Models.File image)
+        public List<ViewModels.FileInfo> GetFileInfoByReferId(Guid referId)
         {
-            _unitOfWork.File.Edit(image);
-            _unitOfWork.Commit();
-            return new NotificationViewModel()
+            var fileInfos = new List<ViewModels.FileInfo>();
+            var files = _unitOfWork.File.Get(i => i.ReferId == referId).Select(i => new { i.FileName, i.MIME, i.FileBytes, i.Id }).ToList();
+            foreach (var file in files)
             {
-                Status = true,
-                Title = "Sucesso!",
-                Message = "Imagem editada com sucesso."
-            };
-        }
-
-        public NotificationViewModel Create(Data.Models.File image)
-        {
-            image.Id = Guid.NewGuid();
-            _unitOfWork.File.Add(image);
-            _unitOfWork.Commit();
-            return new NotificationViewModel()
-            {
-                Status = true,
-                Title = "Sucesso!",
-                Message = "Imagem inserida com com sucesso."
-            };
+                fileInfos.Add(new ViewModels.FileInfo()
+                {
+                    Id = file.Id,
+                    MIME = file.MIME,
+                    FileName = file.FileName,
+                    Base64File = Convert.ToBase64String(file.FileBytes)
+                });
+            }
+            return fileInfos;
         }
 
         public NotificationViewModel UploadFiles(List<IFormFile> files, Guid referId, string tableName)
         {
-            foreach (var file in files)
+            if (files != null)
             {
-                using (var memoryStream = new MemoryStream())
+                foreach (var file in files)
                 {
-                    file.CopyTo(memoryStream);
-                    var byteArray = memoryStream.ToArray();
-                    var newFile = new Data.Models.File()
+                    using (var memoryStream = new MemoryStream())
                     {
-                        Id = Guid.NewGuid(),
-                        ReferId = referId,
-                        TableName = tableName,
-                        Type = "Arquivo",
-                        FileName = file.FileName,
-                        MIME = file.ContentType,
-                        Priority = 0,
-                        FileBytes = byteArray
-                    };
-                    _unitOfWork.File.Add(newFile);
+                        file.CopyTo(memoryStream);
+                        var byteArray = memoryStream.ToArray();
+                        var newFile = new Data.Models.File()
+                        {
+                            Id = Guid.NewGuid(),
+                            ReferId = referId,
+                            TableName = tableName,
+                            Type = "Arquivo",
+                            FileName = file.FileName,
+                            MIME = file.ContentType,
+                            Priority = 0,
+                            FileBytes = byteArray
+                        };
+                        _unitOfWork.File.Add(newFile);
+                    }
                 }
+
+                _unitOfWork.Commit();
+
+                return new NotificationViewModel()
+                {
+                    Message = "Arquivo incluso com sucesso.",
+                    Title = "Sucesso!",
+                    Status = true
+                };
             }
-
-            _unitOfWork.Commit();
-
-            return new NotificationViewModel()
-            {
-                Message = "Arquivo incluso com sucesso.",
-                Title = "Sucesso!",
-                Status = true
-            };
+            return null;
         }
 
         public NotificationViewModel Remove(Guid id)

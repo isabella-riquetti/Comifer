@@ -4,13 +4,13 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Comifer.ADM.ViewModels
 {
-    public class DetailedProductParentViewModel : ProductParent
+    public class DetailedProductViewModel : Product
     {
-        public string CategoryName => Category?.Name;
         public string BrandName => Brand.Name;
-
-        [Display(Name = "Qtd. de Produtos")]
-        public int ProductCount => Products.Count;
+        public string ProductParentName => ProductParent?.Name;
+        
+        [Display(Name = "Qtd. Compatíveis")]
+        public int ProductGroupCount => ProductGroup?.Products.Count ?? 0;
 
         [Display(Name = "Arquivos atuais")]
         public List<FileInfo> FilesInfo { get; set; }

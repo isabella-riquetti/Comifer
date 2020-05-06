@@ -34,19 +34,15 @@
             @using (@Html.BeginForm("Incluir", "Fornecedores", FormMethod.Post))
             {
                 <div class="row">
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.Name)
-                            @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "Nome do Fornecedor" })
-                            @Html.ValidationMessageFor(m => m.Name)
-                        </div>
+                    <div class="col-6 form-group">
+                        @Html.LabelFor(m => m.Name)
+                        @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "Nome do Fornecedor" })
+                        @Html.ValidationMessageFor(m => m.Name)
                     </div>
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.DeliveryTime)
-                            @Html.TextBoxFor(m => m.DeliveryTime, new { @class = "form-control", type = "value", skip = "1", placeholder = "Prazo de Entrega" })
-                            @Html.ValidationMessageFor(m => m.DeliveryTime)
-                        </div>
+                    <div class="col-6 form-group">
+                        @Html.LabelFor(m => m.DeliveryTime)
+                        @Html.TextBoxFor(m => m.DeliveryTime, new { @class = "form-control", type = "number", step = "1", placeholder = "Prazo de Entrega" })
+                        @Html.ValidationMessageFor(m => m.DeliveryTime)
                     </div>
                 </div>
                 <div class="row">

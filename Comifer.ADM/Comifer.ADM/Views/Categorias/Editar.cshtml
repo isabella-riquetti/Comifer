@@ -34,12 +34,10 @@
             @using (@Html.BeginForm("Editar", "Categorias", FormMethod.Post))
             {
                 @Html.HiddenFor(m => m.Id)
-                <div class="pl-lg-12">
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.Name)
-                        @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "Nome da Categoria" })
-                        @Html.ValidationMessageFor(m => m.Name)
-                    </div>
+                <div class="pl-lg-12 form-group">
+                    @Html.LabelFor(m => m.Name)
+                    @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "Nome da Categoria" })
+                    @Html.ValidationMessageFor(m => m.Name)
                 </div>
                 <div class="pl-lg-12">
                     <button type="submit" class="btn btn-primary pull-right">Salvar</button>

@@ -24,7 +24,6 @@ namespace Comifer.ADM.Services
                 {
                     Id = c.Id,
                     Name = c.Name,
-                    Products = c.Products,
                     ProductParents = c.ProductParents
                 })
                 .ToList();
@@ -38,7 +37,6 @@ namespace Comifer.ADM.Services
                 {
                     Id = c.Id,
                     Name = c.Name,
-                    Products = c.Products,
                     ProductParents = c.ProductParents
                 })
                 .FirstOrDefault();

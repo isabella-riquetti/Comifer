@@ -10,8 +10,7 @@ namespace Comifer.ADM.Services
     {
         List<File> GetAllByReferId(Guid referId);
         File Get(Guid id);
-        NotificationViewModel Edit(File image);
-        NotificationViewModel Create(File image);
+        List<FileInfo> GetFileInfoByReferId(Guid referId);
         NotificationViewModel UploadFiles(List<IFormFile> files, Guid referId, string tableName);
         NotificationViewModel Remove(Guid id);
     }

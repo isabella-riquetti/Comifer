@@ -42,7 +42,6 @@
                 @Html.HiddenFor(m => m.Id)
                 @Html.HiddenFor(m => m.Name)
                 @Html.HiddenFor(m => m.ProductParentCount)
-                @Html.HiddenFor(m => m.ProductCount)
                 <div class="pl-lg-12">
                     <div class="form-group">
                         @Html.LabelFor(m => m.Name)
@@ -51,10 +50,6 @@
                     <div class="form-group">
                         @Html.LabelFor(m => m.ProductParentCount)
                         @Html.DisplayFor(m => m.ProductParentCount)
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.ProductCount)
-                        @Html.DisplayFor(m => m.ProductCount)
                     </div>
                 </div>
                 <div class="pl-lg-12">

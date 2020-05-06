@@ -23,7 +23,6 @@
 <div class="col">
     <div class="card">
         <div class="card-header border-0">
-            <h2 class="mb-0 pb-4">Marcas</h2>
             @using (@Html.BeginForm("Principal", "Marcas"))
             {
                 <div class="row filter">
@@ -31,9 +30,12 @@
                         <label for="ProviderId">Fornecedor:</label>
                         @Html.DropDownList("idFornecedor", new List<SelectListItem>(ViewBag.Providers), new { @class = "form-control" })
                     </div>
+                    <div class="col-12 mt-1">
+                        <button type="submit" class="btn btn-primary pull-right">Filtrar</button>
+                    </div>
                 </div>
-                <button type="submit" class="btn btn-primary pull-right">Filtrar</button>
             }
+            <h3 class="mb-0">Lista de Marcas</h3>
         </div>
         @await Html.PartialAsync("_Brands", Model)
     </div>

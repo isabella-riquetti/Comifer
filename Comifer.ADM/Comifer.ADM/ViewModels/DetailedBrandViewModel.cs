@@ -7,10 +7,10 @@ namespace Comifer.ADM.ViewModels
     {
         public string ProviderName => Provider.Name;
 
-        [Display(Name = "Qtd. de Máquinas")]
+        [Display(Name = "Qtd. Vistas Explodidas")]
         public int ProductParentCount => ProductParents.Count;
 
-        [Display(Name = "Qtd. de Peças")]
+        [Display(Name = "Qtd. Produtos")]
         public int ProductCount => Products.Count;
     }
 }

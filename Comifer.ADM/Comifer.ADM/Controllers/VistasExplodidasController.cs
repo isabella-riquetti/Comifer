@@ -1,23 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using Comifer.ADM.Services;
 using Comifer.ADM.ViewModels;
 using Comifer.Data.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Comifer.ADM.Controllers
 {
-    public class VistaExplodidasController : Controller
+    public class VistasExplodidasController : Controller
     {
         private readonly IProductParentService _productParentService;
         private readonly IBrandService _brandService;
         private readonly ICategoryService _categoryService;
 
-        public VistaExplodidasController(IProductParentService productParentService, IBrandService brandService, ICategoryService categoryService)
+        public VistasExplodidasController(IProductParentService productParentService, IBrandService brandService, ICategoryService categoryService)
         {
             _productParentService = productParentService;
             _brandService = brandService;
@@ -37,55 +32,49 @@ namespace Comifer.ADM.Controllers
 
         public IActionResult Detalhes(Guid id)
         {
-            var productParent = _productParentService.GetDetailed(id);
-            return View(productParent);
-        }
-
-        public IActionResult IncluirArquivos(Guid id)
-        {
-            var productParent = _productParentService.GetDetailedWithFiles(id);
-            return View(productParent);
+            var product = _productParentService.GetDetailed(id);
+            return View(product);
         }
 
         public IActionResult Incluir()
         {
-            ViewBag.Categories = _categoryService.GetSelectList();
             ViewBag.Brands = _brandService.GetSelectList();
-            return View();
+            ViewBag.Categories = _categoryService.GetSelectList();
+            return View(new ProductParentViewModel());
         }
 
         [HttpPost]
-        public IActionResult Incluir(ProductParent productParent)
+        public IActionResult Incluir(ProductParentViewModel productParent)
         {
             if (!ModelState.IsValid)
             {
-                ViewBag.Categories = _categoryService.GetSelectList();
                 ViewBag.Brands = _brandService.GetSelectList();
+                ViewBag.Categories = _categoryService.GetSelectList();
                 return View(productParent);
             }
 
-            var result  = _productParentService.Create(productParent);
+            var result = _productParentService.Create(productParent);
             TempData.Put("Notification", result);
 
-            return RedirectToAction("IncluirArquivos", new { id = productParent.Id });
+            return RedirectToAction("Principal");
         }
 
         public IActionResult Editar(Guid id)
         {
-            ViewBag.Categories = _categoryService.GetSelectList();
             ViewBag.Brands = _brandService.GetSelectList();
+            ViewBag.Categories = _categoryService.GetSelectList();
 
-            var category = _productParentService.Get(id);
-            return View(category);
+            var productParent = _productParentService.GetWithFiles(id);
+            return View(productParent);
         }
 
         [HttpPost]
-        public IActionResult Editar(ProductParent productParent)
+        public IActionResult Editar(ProductParentEditViewModel productParent)
         {
             if (!ModelState.IsValid)
             {
-                ViewBag.Categories = _categoryService.GetSelectList();
                 ViewBag.Brands = _brandService.GetSelectList();
+                ViewBag.Categories = _categoryService.GetSelectList();
                 return View(productParent);
             }
 

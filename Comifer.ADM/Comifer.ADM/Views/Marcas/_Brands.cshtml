@@ -8,8 +8,8 @@
             <tr>
                 <th scope="col" class="sort" data-sort="name">Nome</th>
                 <th scope="col" class="sort text-center" data-sort="provider">Fornecedor</th>
-                <th scope="col" class="sort text-center" data-sort="productparents">Qtd. de Máquinas na Categoria</th>
-                <th scope="col" class="sort text-center" data-sort="products">Qtd. de Peças na Categoria</th>
+                <th scope="col" class="sort text-center" data-sort="productparents">Qtd. Vistas Explodidas</th>
+                <th scope="col" class="sort text-center" data-sort="products">Qtd. Produtos</th>
                 <th scope="col" class="text-center" width="200px">Ações</th>
             </tr>
         </thead>
@@ -36,11 +36,11 @@
                         <a class="btn btn-sm btn-outline-info" href="@Url.Action("Detalhes", "Marcas", new { id = @item.Id })" role="button">
                             <i class="fa fa-search"></i> Detalhes
                         </a>
-                        <a class="btn btn-sm btn-outline-dark" href="@Url.Action("Principal", "Maquinas", new { idMarca = @item.Id })" role="button">
-                            <i class="fa fa-tools"></i> Máquinas
+                        <a class="btn btn-sm btn-outline-dark" href="@Url.Action("Principal", "VistasExplodidas", new { idMarca = @item.Id })" role="button">
+                            <i class="fa fa-tools"></i> Vistas Explodidas
                         </a>
-                        <a class="btn btn-sm btn-outline-dark" href="@Url.Action("Principal", "Pecas", new { idMarca = @item.Id })" role="button">
-                            <i class="fa fa-cogs"></i> Peças
+                        <a class="btn btn-sm btn-outline-dark" href="@Url.Action("Principal", "Produtos", new { idMarca = @item.Id })" role="button">
+                            <i class="fa fa-cogs"></i> Produtos
                         </a>
                     </td>
                 </tr>

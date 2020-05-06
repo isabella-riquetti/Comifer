@@ -34,39 +34,31 @@
             @using (@Html.BeginForm("Editar", "Marcas", FormMethod.Post))
             {
                 <div class="row">
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.Name)
-                            @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "Nome da Marca" })
-                            @Html.ValidationMessageFor(m => m.Name)
-                        </div>
+                    <div class="col-6 form-group">
+                        @Html.LabelFor(m => m.Name)
+                        @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "Nome da Marca" })
+                        @Html.ValidationMessageFor(m => m.Name)
                     </div>
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.ProviderId)
-
-                            <div class="input-group">
-                                @Html.DropDownListFor(m => m.ProviderId, new List<SelectListItem>(ViewBag.Providers), "Selecione um Fornecedor", new { @class = "form-control", placeholder = "Fornecedor" })
-
-                                <div class="input-group-append">
-                                    <div class="input-group-text" id="btnGroupAddon2">
-                                        <a href="@Url.Action("Incluir", "Fornecedores")">
-                                            <i class="fa fa-plus"></i>
-                                        </a>
-                                    </div>
+                    <div class="col-6 form-group">
+                        @Html.LabelFor(m => m.ProviderId)
+                        <div class="input-group">
+                            @Html.DropDownListFor(m => m.ProviderId, new List<SelectListItem>(ViewBag.Providers), "Selecione um Fornecedor", new { @class = "form-control", placeholder = "Fornecedor" })
+                            <div class="input-group-append">
+                                <div class="input-group-text" id="btnGroupAddon2">
+                                    <a href="@Url.Action("Incluir", "Fornecedores")">
+                                        <i class="fa fa-plus"></i>
+                                    </a>
                                 </div>
                             </div>
-                            @Html.ValidationMessageFor(m => m.ProviderId)
                         </div>
+                        @Html.ValidationMessageFor(m => m.ProviderId)
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.SiteUrl)
-                            @Html.TextBoxFor(m => m.SiteUrl, new { @class = "form-control", placeholder = "Nome da Marca" })
-                            @Html.ValidationMessageFor(m => m.SiteUrl)
-                        </div>
+                <div class="col-6 form-group">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.SiteUrl)
+                        @Html.TextBoxFor(m => m.SiteUrl, new { @class = "form-control", placeholder = "Nome da Marca" })
+                        @Html.ValidationMessageFor(m => m.SiteUrl)
                     </div>
                 </div>
                 <div class="row">

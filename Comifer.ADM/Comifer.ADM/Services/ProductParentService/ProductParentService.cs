@@ -11,17 +11,19 @@ namespace Comifer.ADM.Services
     public class ProductParentService : IProductParentService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IFileService _fileService;
 
-        public ProductParentService(IUnitOfWork unitOfWork)
+        public ProductParentService(IUnitOfWork unitOfWork, IFileService fileService)
         {
             _unitOfWork = unitOfWork;
+            _fileService = fileService;
         }
 
         public List<DetailedProductParentViewModel> GetAll(Guid? brandId, Guid? categoryId)
         {
             var productParents = _unitOfWork.ProductParent
                 .Get(b => (brandId == null || b.BrandId == brandId)
-                && (categoryId == null || b.CategoryId == brandId))
+                && (categoryId == null || b.CategoryId == categoryId))
                 .Select(p => new DetailedProductParentViewModel()
                 {
                     Id = p.Id,
@@ -52,13 +54,15 @@ namespace Comifer.ADM.Services
                     Products = p.Products
                 })
                 .FirstOrDefault();
+
+            productParent.FilesInfo = _fileService.GetFileInfoByReferId(productParent.Id);
             return productParent;
         }
 
-        public ProductParentWithFileViewModel GetDetailedWithFiles(Guid id)
+        public ProductParentEditViewModel GetWithFiles(Guid id)
         {
             var productParent = _unitOfWork.ProductParent.Get(b => b.Id == id)
-                .Select(p => new ProductParentWithFileViewModel()
+                .Select(p => new ProductParentEditViewModel()
                 {
                     Id = p.Id,
                     Name = p.Name,
@@ -66,32 +70,14 @@ namespace Comifer.ADM.Services
                     BrandId = p.BrandId,
                     Brand = p.Brand,
                     CategoryId = p.CategoryId,
-                    Category = p.Category,
-                    Products = p.Products
+                    Category = p.Category
                 })
                 .FirstOrDefault();
 
-            var files = GetFiles(productParent.Id);
-            productParent.Files = files;
+            var files = _fileService.GetFileInfoByReferId(productParent.Id);
+            productParent.FilesInfo = files;
 
             return productParent;
-        }
-
-        private List<FileInfo> GetFiles(Guid id)
-        {
-            var fileInfos = new List<FileInfo>();
-            var files = _unitOfWork.File.Get(i => i.ReferId == id).Select(i => new { i.FileName, i.MIME, i.FileBytes, i.Id }).ToList();
-            foreach (var file in files)
-            {
-                fileInfos.Add(new FileInfo()
-                {
-                    Id = file.Id,
-                    MIME = file.MIME,
-                    FileName = file.FileName,
-                    Base64File = Convert.ToBase64String(file.FileBytes)
-                });
-            }
-            return fileInfos;
         }
 
         public ProductParent Get(Guid id)
@@ -100,27 +86,43 @@ namespace Comifer.ADM.Services
             return productParent;
         }
 
-        public NotificationViewModel Edit(ProductParent productParent)
+        public NotificationViewModel Edit(ProductParentEditViewModel product)
         {
-            _unitOfWork.ProductParent.Edit(productParent);
+            var existingProductParent = _unitOfWork.ProductParent.Get(p => p.Id == product.Id).FirstOrDefault();
+            existingProductParent.Name = product.Name;
+            existingProductParent.Code = product.Code;
+            existingProductParent.CategoryId = product.CategoryId;
+            existingProductParent.BrandId = product.BrandId;
+
+            _unitOfWork.ProductParent.Edit(existingProductParent);
             _unitOfWork.Commit();
+
+            _fileService.UploadFiles(product.Files, existingProductParent.Id, "Product");
             return new NotificationViewModel()
             {
                 Status = true,
                 Title = "Sucesso!",
-                Message = "Máquina editada com sucesso."
+                Message = "Vista Explodida editada com sucesso."
             };
         }
 
-        public NotificationViewModel Create(ProductParent productParent)
+        public NotificationViewModel Create(ProductParentViewModel product)
         {
-            productParent.Id = Guid.NewGuid();
-            _unitOfWork.ProductParent.Add(productParent);
+            var newProductParent = new ProductParent()
+            {
+                Id = Guid.NewGuid(),
+                BrandId = product.BrandId,
+                CategoryId = product.CategoryId,
+                Name = product.Name,
+                Code = product.Code                
+            };
+            _unitOfWork.ProductParent.Add(newProductParent);
             _unitOfWork.Commit();
+            _fileService.UploadFiles(product.Files, newProductParent.Id, "Product");
 
             var result = new NotificationViewModel()
             {
-                Message = "Vista Explodida criada com sucesso.",
+                Message = "Vista Explodida inclusa com sucesso.",
                 Status = true,
                 Title = "Sucesso!"
             };

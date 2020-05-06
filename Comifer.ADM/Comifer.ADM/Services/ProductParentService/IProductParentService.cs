@@ -10,10 +10,10 @@ namespace Comifer.ADM.Services
     {
         List<DetailedProductParentViewModel> GetAll(Guid? brandId, Guid? categoryId);
         DetailedProductParentViewModel GetDetailed(Guid id);
-        ProductParentWithFileViewModel GetDetailedWithFiles(Guid id);
+        ProductParentEditViewModel GetWithFiles(Guid id);
         ProductParent Get(Guid id);
-        NotificationViewModel Edit(ProductParent productParent);
-        NotificationViewModel Create(ProductParent productParent);
+        NotificationViewModel Edit(ProductParentEditViewModel product);
+        NotificationViewModel Create(ProductParentViewModel product);
         List<SelectListItem> GetSelectList();
         List<SelectListItem> GetSelectListWithAll();
     }
