@@ -16,5 +16,8 @@ namespace Comifer.ADM.ViewModels
 
         [Display(Name = "Arquivos atuais")]
         public List<FileInfo> FilesInfo { get; set; }
+
+        [Display(Name = "Promoções")]
+        public List<BasicPromotionInfo> PromotionInfos { get; set; }
     }
 }

@@ -32,6 +32,7 @@ namespace Comifer.ADM
             services.AddScoped<IProductParentService, ProductParentService>();
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IProviderService, ProviderService>();
+            services.AddScoped<IPromotionService, PromotionService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -20,4 +20,11 @@ namespace Comifer.ADM.ViewModels
         public string Code { get; set; }
         public bool IsMainInGroup { get; internal set; }
     }
+
+    public class BasicPromotionInfo
+    {
+        public DateTime? ExpiresOn { get; set; }
+        public decimal? Value { get; set; }
+        public decimal? Percentage { get; set; }
+    }
 }

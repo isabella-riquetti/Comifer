@@ -12,11 +12,13 @@ namespace Comifer.ADM.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IFileService _fileService;
+        private readonly IPromotionService _promotionService;
 
-        public ProductService(IUnitOfWork unitOfWork, IFileService fileService)
+        public ProductService(IUnitOfWork unitOfWork, IFileService fileService, IPromotionService promotionService)
         {
             _unitOfWork = unitOfWork;
             _fileService = fileService;
+            _promotionService = promotionService;
         }
 
         public List<DetailedProductViewModel> GetAll(Guid? productParentId, Guid? brandId)
@@ -66,30 +68,51 @@ namespace Comifer.ADM.Services
                     BrandId = p.BrandId,
                     Brand = p.Brand,
                     ProductParentId = p.ProductParentId,
-                    ProductParent = p.ProductParent
+                    ProductParent = p.ProductParent,
+                    Cost = p.Cost
                 })
                 .FirstOrDefault();
 
             product.Compatibility = GetCompatibleProductDetails(product);
             product.FilesInfo = _fileService.GetFileInfoByReferId(product.Id);
+            product.PromotionInfos = GetPromotions(product);
             return product;
+        }
+
+        private List<BasicPromotionInfo> GetPromotions(DetailedProductViewModel product)
+        {
+            var promotions = _unitOfWork.Promotion
+                .Get(p => p.ProductId == product.Id)
+                .OrderByDescending(p => p.ExpiresOn)
+                .Select(p => new BasicPromotionInfo()
+                {
+                    ExpiresOn = p.ExpiresOn,
+                    Percentage = p.Percentage,
+                    Value = p.Value
+                })
+                .ToList();
+            return promotions;
         }
 
         private List<BasicProdutInfo> GetCompatibleProductDetails(DetailedProductViewModel product)
         {
-            var productsInGroup = _unitOfWork.Product.Get(p => p.ProductGroupId == product.ProductGroupId && p.Id != product.Id);
-            var compatible = productsInGroup
-                .Select(p => new BasicProdutInfo()
-                {
-                    Id = p.Id,
-                    Name = p.Name,
-                    Code = p.Code,
-                    IsMainInGroup = p.IsMainInGroup
-                })
-                .OrderBy(b => b.Name)
-                .ToList();
+            if (product.ProductGroupId != null)
+            {
+                var productsInGroup = _unitOfWork.Product.Get(p => p.ProductGroupId == product.ProductGroupId && p.Id != product.Id);
+                var compatible = productsInGroup
+                    .Select(p => new BasicProdutInfo()
+                    {
+                        Id = p.Id,
+                        Name = p.Name,
+                        Code = p.Code,
+                        IsMainInGroup = p.IsMainInGroup
+                    })
+                    .OrderBy(b => b.Name)
+                    .ToList();
 
-            return compatible;
+                return compatible;
+            }
+            return new List<BasicProdutInfo>();
         }
 
         public ProductEditViewModel Get(Guid id)
@@ -201,6 +224,8 @@ namespace Comifer.ADM.Services
             _unitOfWork.Product.Add(newProduct);
             _unitOfWork.Commit();
             _fileService.UploadFiles(product.Files, newProduct.Id, "Product");
+
+            _promotionService.Create(newProduct.Id, 25);
 
             var result = new NotificationViewModel()
             {

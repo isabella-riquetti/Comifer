@@ -145,7 +145,7 @@
             var products = $("#ProductInGroupId");
             $.getJSON("@Url.Action("GetSelectList", "Produtos")", { brandId: brandId }, function (response) {
                 products.empty();
-                products.append($('<option>').text("Selecione o produto compatível"));
+                products.append($('<option value>').text("Selecione o produto compatível"));
                 $.each(response, function (index, item) {
                     products.append(
                         $('<option>', {

@@ -69,36 +69,120 @@
                     @Html.LabelFor(m => m.BrandId)
                     @Html.DisplayFor(m => m.BrandName)
                 </div>
-                <div class="form-group">
-                    @Html.Label("Arquivos existentes")
-                    @foreach (var item in Model.FilesInfo)
-                    {
-                        <div class="mt-1 mb-1">
-                            <a href="@Url.Action("Download", "File", new { id = @item.Id })" class="ml-1 mt-3">
-                                <i class="fa fa-download mr-1"></i> @String.Concat(item.FileName)
-                            </a>
-                        </div>
-                    }
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Compatibility)
-                    <ul>
-                        @foreach (var item in Model.Compatibility)
-                        {
-                            <li>
-                                @if (item.IsMainInGroup)
-                                {
-                                    <strong>@item.Name | @item.Code </strong>
-                                }
-                                else
-                                {
-                                    <span>@item.Name | @item.Code </span>
-                                }
-                            </li>
-                        }
-                    </ul>
-                </div>
             </div>
         </div>
     </div>
 </div>
+
+@if (Model.FilesInfo != null && Model.FilesInfo.Any())
+{
+    <div class="col-md-12 order-xl-1">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="mb-0">Arquivos</h3>
+            </div>
+            <div class="table-responsive">
+                <div class="card-body detailment">
+                    <div class="pl-lg-12">
+                        @foreach (var item in Model.FilesInfo)
+                        {
+                            <div class="mt-1 mb-1">
+                                <a href="@Url.Action("Download", "File", new { id = @item.Id })" class="ml-1 mt-3">
+                                    <i class="fa fa-download mr-1"></i> @String.Concat(item.FileName)
+                                </a>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@{
+    var columnSize = Model.PromotionInfos != null && Model.PromotionInfos.Any() && Model.Compatibility != null && Model.Compatibility.Any() ? "col-6" : "col-12";
+}
+
+@if (Model.PromotionInfos != null && Model.PromotionInfos.Any())
+{
+    <div class="@columnSize order-xl-1">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="mb-0">Promoções</h3>
+            </div>
+            <div class="table-responsive">
+                <table class="table align-items-center table-flush">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Data de Expiração</th>
+                            <th class="text-center">Valor</th>
+                            <th class="text-center">Valor Calculado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.PromotionInfos)
+                        {
+                            <tr>
+                                @{
+                                    string valueText = "";
+                                    var newValueText = "";
+                                    var expirationDate = item.ExpiresOn == null ? "Sem data de expiração" : item.ExpiresOn.Value.ToString("dd/MM/yyyy");
+                                }
+                                @if (item.Percentage != null)
+                                {
+                                    valueText = String.Concat(item.Percentage, " %");
+                                    var newValue = Model.Price * ((100 - item.Percentage) / 100);
+                                    newValueText = newValue.Value.ToString("C2", new System.Globalization.CultureInfo("pt-BR"));
+                                }
+                                else
+                                {
+                                    valueText = item.Value.Value.ToString("C2", new System.Globalization.CultureInfo("pt-BR"));
+                                    var newValue = Model.Price - item.Value;
+                                    newValueText = newValue.Value.ToString("C2");
+                                }
+
+                                <td class="text-center">@expirationDate</td>
+                                <td class="text-center">@valueText</td>
+                                <td class="text-center">@newValueText</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+}
+
+@if (Model.Compatibility != null && Model.Compatibility.Any())
+{
+    <div class="@columnSize order-xl-1">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="mb-0">Grupo de Compatibilidade</h3>
+            </div>
+            <div class="table-responsive">
+                <table class="table align-items-center table-flush">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th class="text-center">Código</th>
+                            <th class="text-center" width="100px">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Compatibility)
+                        {
+                            <tr>
+                                <td>@item.Name</td>
+                                <td class="text-center">@item.Code</td>
+                                <td class="text-center">
+                                    <a href="@Url.Action("Detalhes", "Produtos", new { id = @item.Id })" class="btn btn-outline-info btn-sm"><i class="fa fa-search mr-1"></i>Detalhes</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+}
