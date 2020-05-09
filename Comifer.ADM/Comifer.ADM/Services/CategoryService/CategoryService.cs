@@ -26,6 +26,7 @@ namespace Comifer.ADM.Services
                     Name = c.Name,
                     ProductParents = c.ProductParents
                 })
+                .OrderBy(b => b.Name)
                 .ToList();
             return categories;
         }

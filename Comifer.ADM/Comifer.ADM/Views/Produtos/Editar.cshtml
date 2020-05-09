@@ -32,6 +32,7 @@
         <div class="card-body">
             @using (@Html.BeginForm("Editar", "Produtos", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
+                @Html.Hidden("CurrentProductInGroupId", Model.ProductInGroupId)
                 <div class="row">
                     <div class="col-6 form-group">
                         @Html.LabelFor(m => m.Name)
@@ -98,10 +99,35 @@
                         @Html.Label("Incluir arquivos")
                         <input type="file" name="Files" id="Files" multiple class="form-control" />
                     </div>
+                    <div class="col-12">
+                        @{
+                            var editability = Model.Compatibility != null && Model.Compatibility.Any();
+                            var isDisabled = editability ? "disabled" : "";
+                            var title = editability ? "Não é possível desabilitar esta opção enquanto este for o principal de um grupo ativo." :
+                                "O produto principal será a fonte de preço e estoque de todos os produtos filhos.";
+                        }
+                        <div class="custom-switch form-group">
+                            @Html.CheckBoxFor(m => m.IsMainInGroup, new { @class = "custom-control-input", isDisabled, @title = title })
+                            @Html.LabelFor(m => m.IsMainInGroup, new { @class = "custom-control-label" })
+                            @Html.ValidationMessageFor(m => m.IsMainInGroup)
+                        </div>
+                    </div>
+                </div>
+                <div class="row" id="compatibily-select">
+                    <div class="col-6 form-group">
+                        @Html.LabelFor(m => m.BrandOfMainProductInGroupId)
+                        @Html.DropDownListFor(m => m.BrandOfMainProductInGroupId, new List<SelectListItem>(ViewBag.Brands), "Selecione uma Marca para Buscar Produtos", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.BrandOfMainProductInGroupId)
+                    </div>
+                    <div class="col-6 form-group">
+                        @Html.LabelFor(m => m.ProductInGroupId)
+                        @Html.DropDownListFor(m => m.ProductInGroupId, new List<SelectListItem>(), "Selecione uma Marca para Buscar Produtos", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.ProductInGroupId)
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-12">
-                        <button type="submit" class="btn btn-primary pull-right">Incluir</button>
+                        <button type="submit" class="btn btn-primary pull-right">Editar</button>
                     </div>
                 </div>
             }
@@ -109,10 +135,13 @@
         </div>
     </div>
 </div>
+@{
+    var columnSize = Model.FilesInfo != null && Model.FilesInfo.Any() && Model.Compatibility != null && Model.Compatibility.Any() ? "col-6" : "col-12";
+}
 
 @if (Model.FilesInfo != null && Model.FilesInfo.Any())
 {
-    <div class="col-12 order-xl-1">
+    <div class="@columnSize order-xl-1">
         <div class="card">
             <div class="card-header">
                 <div class="row align-items-center">
@@ -140,4 +169,94 @@
             </div>
         </div>
     </div>
+}
+
+@if (Model.Compatibility != null && Model.Compatibility.Any())
+{
+    <div class="@columnSize order-xl-1">
+        <div class="card">
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col-8">
+                        <h3 class="mb-0">Grupo de Compatibilidade</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table align-items-center table-flush">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th class="text-center">Código</th>
+                            <th class="text-center" width="100px">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Compatibility)
+                        {
+                            <tr>
+                                <td>@item.Name</td>
+                                <td class="text-center">@item.Code</td>
+                                <td class="text-center">
+                                    <a href="@Url.Action("Detalhes", "Produtos", new { id = @item.Id })" class="btn btn-outline-info btn-sm"><i class="fa fa-search mr-1"></i>Detalhes</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+}
+
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            if ('@Model.ProductInGroupId' != '') {
+                $("#BrandOfMainProductInGroupId").trigger("change");
+            }
+            $("#IsMainInGroup").trigger("change");
+        });
+
+        $(document).on("change", "#IsMainInGroup", function () {
+            if ($(this).is(":checked") == true) {
+                if ('@Model.BrandOfMainProductInGroupId' != '' && '@Model.ProductInGroupId' != '') {
+                    alert("Este produto se tornará o principal do agrupamento ao qual pertence. E o atual item principal será convertido a um item comum, porém ainda fará parte deste agrupamento!");
+                }
+                $("#compatibily-select").hide();
+            }
+            else {
+                $("#compatibily-select").show();
+            }
+        });
+
+        $(document).on("change", "#BrandOfMainProductInGroupId", function () {
+            var brandId = $(this).val();
+            var products = $("#ProductInGroupId");
+            $.getJSON("@Url.Action("GetSelectList", "Produtos")", { brandId: brandId, id: '@Model.Id' }, function (response) {
+                products.empty();
+                products.append($('<option value>').text("Selecione o produto compatível"));
+                $.each(response, function (index, item) {
+                    products.append(
+                        $('<option>', {
+                            value: item.value,
+                        }).text(item.text)
+                    );
+                });
+
+                if ('@Model.ProductInGroupId' != '') {
+                    products.val('@Model.ProductInGroupId');
+                }
+            });
+        });
+
+        $(document).on("blur", "#Cost", function () {
+            var cost = $(this).val();
+            if (cost != null && cost != "") {
+                $("#Price").val(cost * 2);
+            }
+        });
+
+    </script>
 }

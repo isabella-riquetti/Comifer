@@ -28,6 +28,7 @@ namespace Comifer.ADM.Services
                     DeliveryTime = b.DeliveryTime,
                     Brands = b.Brands
                 })
+                .OrderBy(b => b.Name)
                 .ToList();
             return providers;
         }

@@ -20,7 +20,9 @@ namespace Comifer.ADM.Services
 
         public List<Data.Models.File> GetAllByReferId(Guid referId)
         {
-            var images = _unitOfWork.File.Get().ToList();
+            var images = _unitOfWork.File.Get()
+                .OrderBy(b => b.FileName)
+                .ToList();
             return images;
         }
 
@@ -33,7 +35,9 @@ namespace Comifer.ADM.Services
         public List<ViewModels.FileInfo> GetFileInfoByReferId(Guid referId)
         {
             var fileInfos = new List<ViewModels.FileInfo>();
-            var files = _unitOfWork.File.Get(i => i.ReferId == referId).Select(i => new { i.FileName, i.MIME, i.FileBytes, i.Id }).ToList();
+            var files = _unitOfWork.File.Get(i => i.ReferId == referId).Select(i => new { i.FileName, i.MIME, i.FileBytes, i.Id })
+                .OrderBy(b => b.FileName)
+                .ToList();
             foreach (var file in files)
             {
                 fileInfos.Add(new ViewModels.FileInfo()

@@ -1,5 +1,5 @@
 ﻿using Comifer.ADM.ViewModels;
-using Comifer.Data.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 
@@ -12,5 +12,6 @@ namespace Comifer.ADM.Services
         NotificationViewModel Create(ProductViewModel product);
         ProductEditViewModel Get(Guid id);
         NotificationViewModel Edit(ProductEditViewModel product);
+        List<SelectListItem> GetSelectList(Guid brandId, Guid? id);
     }
 }

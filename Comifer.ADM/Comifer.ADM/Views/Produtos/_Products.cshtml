@@ -12,7 +12,7 @@
                 <th scope="col" class="sort text-center" data-sort="supply">Estoque</th>
                 <th scope="col" class="sort text-center" data-sort="brands">Marcas</th>
                 <th scope="col" class="sort text-center" data-sort="productParents">Vista Explodida</th>
-                <th scope="col" class="sort text-center" data-sort="productGroupss">Qtd. de Compatibilidades</th>
+                <th scope="col" class="sort text-center" data-sort="productGroupss">Grupo de Compatibilidade</th>
                 <th scope="col" class="text-center" width="200px">Ações</th>
             </tr>
         </thead>
@@ -39,7 +39,7 @@
                         @item.ProductParentName
                     </td>
                     <td class="products text-center">
-                        @item.ProductGroupCount
+                        @item.ProductMainInGroupCode
                     </td>
                     <td class="text-right text-center">
                         <a class="btn btn-sm btn-outline-primary" href="@Url.Action("Editar", "Produtos", new { id = @item.Id })" role="button">
@@ -54,3 +54,9 @@
         </tbody>
     </table>
 </div>
+
+@section Scripts {
+    <script>
+        $("table").dataTable();
+    </script>
+}

@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using Comifer.ADM.Services;
 using Comifer.ADM.ViewModels;
-using Comifer.Data.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Comifer.ADM.Controllers
@@ -79,6 +73,10 @@ namespace Comifer.ADM.Controllers
         [HttpPost]
         public IActionResult Editar(ProductEditViewModel product)
         {
+            if(product.BrandOfMainProductInGroupId != null && product.ProductInGroupId == null)
+            {
+                ModelState.AddModelError("ProductInGroupId", "Para incluir o produto em um grupo de compatibilidade é necessário selecionar um produto.");
+            }
             if (!ModelState.IsValid)
             {
                 ViewBag.Brands = _brandService.GetSelectList();
@@ -89,6 +87,14 @@ namespace Comifer.ADM.Controllers
             var result = _productService.Edit(product);
             TempData.Put("Notification", result);
             return RedirectToAction("Principal");
+        }
+
+        [HttpGet]
+        public JsonResult GetSelectList(Guid brandId, Guid? id)
+        {
+            var result = _productService.GetSelectList(brandId, id);
+
+            return Json(result);
         }
     }
 }

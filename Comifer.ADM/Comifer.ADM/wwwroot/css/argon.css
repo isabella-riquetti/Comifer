@@ -16,6 +16,20 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
+.edit-line {
+    min-width: 98%;
+    background-image: linear-gradient(to left, #5603ad 60%, white 0%);
+    background-position: bottom;
+    background-size: 13px 1px;
+    background-repeat: repeat-x;
+    margin-bottom: 2rem;
+    margin-top: 0.5rem;
+}
+
+.custom-switch .field-validation-error {
+    display: block;
+}
+
 .detailment label {
     display: block;
 }

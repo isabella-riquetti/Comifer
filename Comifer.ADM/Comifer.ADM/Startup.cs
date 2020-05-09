@@ -29,7 +29,6 @@ namespace Comifer.ADM
             services.AddScoped<ICustomerAddressService, CustomerAddressService>();
             services.AddScoped<ICustomerService, CustomerService>();
             services.AddScoped<IFileService, FileService>();
-            services.AddScoped<IProductGroupService, ProductGroupService>();
             services.AddScoped<IProductParentService, ProductParentService>();
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IProviderService, ProviderService>();

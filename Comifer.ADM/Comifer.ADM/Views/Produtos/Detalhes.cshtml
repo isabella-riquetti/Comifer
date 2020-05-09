@@ -70,10 +70,6 @@
                     @Html.DisplayFor(m => m.BrandName)
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(m => m.ProductGroupCount)
-                    @Html.DisplayFor(m => m.ProductGroupCount)
-                </div>
-                <div class="form-group">
                     @Html.Label("Arquivos existentes")
                     @foreach (var item in Model.FilesInfo)
                     {
@@ -83,6 +79,24 @@
                             </a>
                         </div>
                     }
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Compatibility)
+                    <ul>
+                        @foreach (var item in Model.Compatibility)
+                        {
+                            <li>
+                                @if (item.IsMainInGroup)
+                                {
+                                    <strong>@item.Name | @item.Code </strong>
+                                }
+                                else
+                                {
+                                    <span>@item.Name | @item.Code </span>
+                                }
+                            </li>
+                        }
+                    </ul>
                 </div>
             </div>
         </div>

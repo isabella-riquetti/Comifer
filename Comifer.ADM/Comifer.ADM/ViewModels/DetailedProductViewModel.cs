@@ -8,9 +8,11 @@ namespace Comifer.ADM.ViewModels
     {
         public string BrandName => Brand.Name;
         public string ProductParentName => ProductParent?.Name;
-        
-        [Display(Name = "Qtd. Compatíveis")]
-        public int ProductGroupCount => ProductGroup?.Products.Count ?? 0;
+
+        public string ProductMainInGroupCode { get; set; }
+
+        [Display(Name = "Grupo de Compatibilidade")]
+        public List<BasicProdutInfo> Compatibility { get; set; }
 
         [Display(Name = "Arquivos atuais")]
         public List<FileInfo> FilesInfo { get; set; }

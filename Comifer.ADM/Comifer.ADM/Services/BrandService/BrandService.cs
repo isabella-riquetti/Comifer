@@ -30,6 +30,7 @@ namespace Comifer.ADM.Services
                     Products = p.Products,
                     SiteUrl = p.SiteUrl
                 })
+                .OrderBy(b => b.Name)
                 .ToList();
             return brands;
         }
