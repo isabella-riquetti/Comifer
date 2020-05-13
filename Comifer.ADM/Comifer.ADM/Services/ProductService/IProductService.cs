@@ -7,6 +7,8 @@ namespace Comifer.ADM.Services
 {
     public interface IProductService
     {
+        DashboardItemViewModel GetCount();
+        DashboardItemViewModel GetFilledCount();
         List<DetailedProductViewModel> GetAll(Guid? productParentId, Guid? brandId);
         DetailedProductViewModel GetDetailed(Guid id);
         NotificationViewModel Create(ProductViewModel product);

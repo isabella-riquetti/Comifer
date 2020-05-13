@@ -19,6 +19,17 @@ namespace Comifer.ADM.Services
             _fileService = fileService;
         }
 
+        public DashboardItemViewModel GetCount()
+        {
+            var productParentsRegistered = _unitOfWork.ProductParent.Get().Count();
+
+            return new DashboardItemViewModel()
+            {
+                CurrentValue = productParentsRegistered * 1.0m,
+                Growth = null
+            };
+        }
+
         public List<DetailedProductParentViewModel> GetAll(Guid? brandId, Guid? categoryId)
         {
             var productParents = _unitOfWork.ProductParent

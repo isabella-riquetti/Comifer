@@ -21,28 +21,6 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col">
-                            <h5 class="card-title text-uppercase text-muted mb-0">Compras</h5>
-                            <span class="h2 font-weight-bold mb-0">@Model.Orders.CurrentValue</span>
-                        </div>
-                        <div class="col-auto">
-                            <div class="icon icon-shape bg-gradient-green text-white rounded-circle shadow">
-                                <i class="fa fa-hand-holding-usd"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <p class="mt-3 mb-0 text-sm">
-                        <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> @Model.Orders.Growth %</span>
-                        <span class="text-nowrap">Desde semana passada</span>
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-3 col-md-6">
-            <div class="card card-stats">
-                <!-- Card body -->
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col">
                             <h5 class="card-title text-uppercase text-muted mb-0">Clientes</h5>
                             <span class="h2 font-weight-bold mb-0">@Model.Customers.CurrentValue</span>
                         </div>
@@ -54,7 +32,28 @@
                     </div>
                     <p class="mt-3 mb-0 text-sm">
                         <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> @Model.Customers.Growth %</span>
-                        <span class="text-nowrap">Desde semana passada</span>
+                        <span class="text-nowrap">Desde o mês passado</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card card-stats">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="card-title text-uppercase text-muted mb-0">Vistas Explodidas</h5>
+                            <span class="h2 font-weight-bold mb-0">@Model.ProductParents.CurrentValue</span>
+                        </div>
+                        <div class="col-auto">
+                            <div class="icon icon-shape bg-gradient-orange text-white rounded-circle shadow">
+                                <i class="fa fa-tools"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="mt-3 mb-0 text-sm">
+                        <span class="text-success mr-2"></span>
+                        <span class="text-nowrap"></span>
                     </p>
                 </div>
             </div>
@@ -85,12 +84,12 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col">
-                            <h5 class="card-title text-uppercase text-muted mb-0">Vistas Explodidas</h5>
-                            <span class="h2 font-weight-bold mb-0">@Model.ProductParents.CurrentValue</span>
+                            <h5 class="card-title text-uppercase text-muted mb-0">Produtos p/ Venda</h5>
+                            <span class="h2 font-weight-bold mb-0">@Model.FilledProducts.CurrentValue</span>
                         </div>
                         <div class="col-auto">
-                            <div class="icon icon-shape bg-gradient-orange text-white rounded-circle shadow">
-                                <i class="fa fa-tools"></i>
+                            <div class="icon icon-shape bg-gradient-success text-white rounded-circle shadow">
+                                <i class="fa fa-cogs"></i>
                             </div>
                         </div>
                     </div>
@@ -104,7 +103,7 @@
     </div>
 }
 
-<div class="col-xl-8">
+@*<div class="col-xl-8">
     <div class="card bg-default">
         <div class="card-header bg-transparent">
             <div class="row align-items-center">
@@ -141,7 +140,7 @@
                 <canvas id="orders-value" class="chart-canvas"></canvas>
             </div>
         </div>
-    </div>
+     </div>
 </div>
 <div class="col-xl-4">
     <div class="card">
@@ -163,8 +162,8 @@
 </div>
 
 <script src="~/vendor/chart.js/dist/Chart.min.js"></script>
-<script src="~/vendor/chart.js/dist/Chart.extension.js"></script>
-@section scripts {
+<script src="~/vendor/chart.js/dist/Chart.extension.js"></script>*@
+@*@section scripts {
     <script>
 
         var BarsChart = (function () {
@@ -248,5 +247,5 @@
 
         })();
 
-    </script>
-}
+    </script>*@
+            }

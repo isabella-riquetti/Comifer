@@ -21,6 +21,30 @@ namespace Comifer.ADM.Services
             _promotionService = promotionService;
         }
 
+        public DashboardItemViewModel GetCount()
+        {
+            var productsRegistered = _unitOfWork.Product.Get().Count();
+
+            return new DashboardItemViewModel()
+            {
+                CurrentValue = productsRegistered * 1.0m,
+                Growth = null
+            };
+        }
+
+        public DashboardItemViewModel GetFilledCount()
+        {
+            var filledProductsRegistered = _unitOfWork.Product.Get(p => p.Price != null && p.Price != 0
+            && p.Weight != null && p.Weight != 0
+            && p.Supply != 0).Count();
+
+            return new DashboardItemViewModel()
+            {
+                CurrentValue = filledProductsRegistered * 1.0m,
+                Growth = null
+            };
+        }
+
         public List<DetailedProductViewModel> GetAll(Guid? productParentId, Guid? brandId)
         {
             var products = _unitOfWork.Product

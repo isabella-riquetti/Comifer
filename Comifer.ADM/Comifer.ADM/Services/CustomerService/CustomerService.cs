@@ -16,6 +16,29 @@ namespace Comifer.ADM.Services
             _unitOfWork = unitOfWork;
         }
 
+        public DashboardItemViewModel GetCountAndGrowth()
+        {
+            var customersRegisteredOn = _unitOfWork.Customer.Get().Select(c => c.RegisteredOn);
+            var lastMonth = DateTime.Now.AddMonths(-1);
+            var sinceLastMonth = customersRegisteredOn.Where(c => c < lastMonth).Count();
+            var fromAllTime = customersRegisteredOn.Count();
+            if(sinceLastMonth == 0)
+            {
+                return new DashboardItemViewModel()
+                {
+                    CurrentValue = fromAllTime * 1.0m,
+                    Growth = 0
+                };
+            }
+            var growth = (fromAllTime - sinceLastMonth) / sinceLastMonth * 100.0m;
+
+            return new DashboardItemViewModel()
+            {
+                CurrentValue = fromAllTime * 1.0m,
+                Growth = growth
+            };
+        }
+
         public List<Customer> GetAll()
         {
             var customers = _unitOfWork.Customer.Get().ToList();

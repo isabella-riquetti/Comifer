@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Comifer.ADM.Models;
 using Comifer.ADM.ViewModels;
 using Comifer.ADM.Services;
@@ -14,34 +9,24 @@ namespace Comifer.ADM.Controllers
     public class InicioController : Controller
     {
         private readonly ICustomerService _customerService;
+        private readonly IProductService _productService;
+        private readonly IProductParentService _productParentService;
 
-        public InicioController(ICustomerService customerService)
+        public InicioController(ICustomerService customerService, IProductService productService, IProductParentService productParentService)
         {
             _customerService = customerService;
+            _productService = productService;
+            _productParentService = productParentService;
         }
 
         public IActionResult Principal()
         {
             var viewModel = new DashboardViewModel()
             {
-                Customers = new DashboardItemViewModel()
-                {
-                    CurrentValue = 1,
-                    Growth = 100
-                },
-                Orders = new DashboardItemViewModel()
-                {
-                    CurrentValue = 16,
-                    Growth = 50
-                },
-                ProductParents = new DashboardItemViewModel()
-                {
-                    CurrentValue = 10
-                },
-                Products = new DashboardItemViewModel()
-                {
-                    CurrentValue = 10
-                },
+                Customers = _customerService.GetCountAndGrowth(),
+                ProductParents = _productParentService.GetCount(),
+                Products = _productService.GetCount(),
+                FilledProducts = _productService.GetFilledCount()
             };
             return View(viewModel);
         }

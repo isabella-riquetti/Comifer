@@ -3,8 +3,8 @@
     public class DashboardViewModel
     {
         public DashboardItemViewModel Customers { get; set; }
-        public DashboardItemViewModel Orders { get; set; }
         public DashboardItemViewModel Products { get; set; }
+        public DashboardItemViewModel FilledProducts { get; set; }
         public DashboardItemViewModel ProductParents { get; set; }
     }
 
