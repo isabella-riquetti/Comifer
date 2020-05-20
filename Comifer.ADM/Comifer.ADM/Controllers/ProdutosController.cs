@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Comifer.ADM.Services;
 using Comifer.ADM.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -13,7 +14,7 @@ namespace Comifer.ADM.Controllers
         private readonly IBrandService _brandService;
         private readonly ICategoryService _categoryService;
 
-        public ProdutosController(IProductService productService, IProductParentService productParentService, 
+        public ProdutosController(IProductService productService, IProductParentService productParentService,
             IBrandService brandService, ICategoryService categoryService)
         {
             _productService = productService;
@@ -22,7 +23,7 @@ namespace Comifer.ADM.Controllers
             _categoryService = categoryService;
         }
 
-        public IActionResult Principal(Guid? idVistaExplodida, Guid? idMarca, string text = "")
+        public IActionResult Principal(Guid? idVistaExplodida, Guid? idMarca, string text = "", bool fromSearch = false)
         {
             ViewBag.BrandId = idMarca;
             ViewBag.Brands = _brandService.GetSelectListWithAll();
@@ -31,8 +32,8 @@ namespace Comifer.ADM.Controllers
             ViewBag.Text = text;
 
             if (idMarca == null && idVistaExplodida == null && String.IsNullOrEmpty(text))
-            {   
-                if(ModelState.ContainsKey("idMarca"))
+            {
+                if (ModelState.ContainsKey("idMarca"))
                     ModelState["idMarca"].Errors.Clear();
                 if (ModelState.ContainsKey("idVistaExplodida"))
                     ModelState["idVistaExplodida"].Errors.Clear();
@@ -55,13 +56,24 @@ namespace Comifer.ADM.Controllers
                     ModelState["text"].Errors.Clear();
 
                 var products = _productService.GetAll(idVistaExplodida, idMarca, text);
+
+                if (fromSearch)
+                {
+                    var exactCodes = products.Where(p => p.Code == text).ToList();
+                    if (exactCodes.Count == 1)
+                    {
+                        var exactCodeId = exactCodes.FirstOrDefault().Id;
+                        return RedirectToAction("EditarRapido", new { id = exactCodeId });
+                    }
+                }
+
                 return View(products);
             }
         }
 
         public ActionResult Search(string search)
         {
-            return RedirectToAction("Principal", new { text = search });
+            return RedirectToAction("Principal", new { text = search, fromSearch = true });
         }
 
         public IActionResult Detalhes(Guid id)
@@ -105,7 +117,7 @@ namespace Comifer.ADM.Controllers
         [HttpPost]
         public IActionResult Editar(ProductEditViewModel product)
         {
-            if(product.BrandOfMainProductInGroupId != null && product.ProductInGroupId == null)
+            if (product.BrandOfMainProductInGroupId != null && product.ProductInGroupId == null)
             {
                 ModelState.AddModelError("ProductInGroupId", "Para incluir o produto em um grupo de compatibilidade é necessário selecionar um produto.");
             }
@@ -118,6 +130,29 @@ namespace Comifer.ADM.Controllers
 
             var result = _productService.Edit(product);
             TempData.Put("Notification", result);
+            return RedirectToAction("Principal");
+        }
+
+        public IActionResult EditarRapido(Guid id)
+        {
+            var product = _productService.GetFast(id);
+            return View(product);
+        }
+
+        [HttpPost]
+        public IActionResult EditarRapido(ProductFastEditViewModel product)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(product);
+            }
+
+            var result = _productService.EditFast(product);
+            TempData.Put("Notification", result);
+            if (!result.Status)
+            {
+                return View(product);
+            }
             return RedirectToAction("Principal");
         }
 

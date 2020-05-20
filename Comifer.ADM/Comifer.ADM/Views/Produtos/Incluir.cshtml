@@ -76,12 +76,12 @@
                     </div>
                     <div class="col-6 form-group">
                         @Html.LabelFor(m => m.Cost)
-                        @Html.TextBoxFor(m => m.Cost, new { @class = "form-control", placeholder = "Custo", type = "number", step = "0.1" })
+                        @Html.TextBoxFor(m => m.CostValue, new { @class = "form-control", placeholder = "Custo", type = "number", step = "0.1" })
                         @Html.ValidationMessageFor(m => m.Cost)
                     </div>
                     <div class="col-6 form-group">
                         @Html.LabelFor(m => m.Price)
-                        @Html.TextBoxFor(m => m.Price, new { @class = "form-control", placeholder = "Preço", type = "number", step = "0.01" })
+                        @Html.TextBoxFor(m => m.PriceValue, new { @class = "form-control", placeholder = "Preço", type = "number", step = "0.01" })
                         @Html.ValidationMessageFor(m => m.Price)
                     </div>
                     <div class="col-6 form-group">
@@ -91,7 +91,7 @@
                     </div>
                     <div class="col-6 form-group">
                         @Html.LabelFor(m => m.Weight)
-                        @Html.TextBoxFor(m => m.Weight, new { @class = "form-control", placeholder = "Peso", type = "number", step = "0.01" })
+                        @Html.TextBoxFor(m => m.WeightValue, new { @class = "form-control", placeholder = "Peso", type = "number", step = "0.01" })
                         @Html.ValidationMessageFor(m => m.Weight)
                     </div>
                     <div class="col-12 form-group">

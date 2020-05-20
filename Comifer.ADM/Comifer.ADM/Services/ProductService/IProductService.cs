@@ -15,5 +15,7 @@ namespace Comifer.ADM.Services
         ProductEditViewModel Get(Guid id);
         NotificationViewModel Edit(ProductEditViewModel product);
         List<SelectListItem> GetSelectList(Guid brandId, Guid? id);
+        ProductFastEditViewModel GetFast(Guid id);
+        NotificationViewModel EditFast(ProductFastEditViewModel product);
     }
 }

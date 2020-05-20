@@ -13,6 +13,10 @@ namespace Comifer.ADM.ViewModels
             Supply = 0;
         }
 
+        public string CostValue { get; set; }
+        public string PriceValue { get; set; }
+        public string WeightValue { get; set; }
+
         [Display(Name = "Produto Compatível")]
         public Guid? ProductInGroupId { get; set; }
 

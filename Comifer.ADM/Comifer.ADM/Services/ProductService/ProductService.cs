@@ -4,6 +4,7 @@ using Comifer.Data.UnitOfWork;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace Comifer.ADM.Services
@@ -154,6 +155,7 @@ namespace Comifer.ADM.Services
                     Name = p.Name,
                     Code = p.Code,
                     Price = p.Price,
+                    Cost = p.Cost,
                     Supply = p.Supply,
                     Weight = p.Weight,
                     ProductGroupId = p.ProductGroupId,
@@ -164,6 +166,10 @@ namespace Comifer.ADM.Services
                     IsMainInGroup = p.IsMainInGroup
                 })
                 .FirstOrDefault();
+
+            product.CostValue = product.Cost?.ToString(CultureInfo.InvariantCulture);
+            product.PriceValue = product.Price?.ToString(CultureInfo.InvariantCulture);
+            product.WeightValue = product.Weight?.ToString(CultureInfo.InvariantCulture);
 
             if (product.ProductGroupId != null)
             {
@@ -212,10 +218,10 @@ namespace Comifer.ADM.Services
             existingProduct.BrandId = product.BrandId;
             existingProduct.ProductParentId = product.ProductParentId;
             existingProduct.ProductGroupId = product.ProductGroupId;
-            existingProduct.Weight = product.Weight;
             existingProduct.Supply = product.Supply;
-            existingProduct.Cost = product.Cost;
-            existingProduct.Price = product.Price;
+            existingProduct.Cost = Convert.ToDecimal(product.CostValue, CultureInfo.InvariantCulture);
+            existingProduct.Price = Convert.ToDecimal(product.PriceValue, CultureInfo.InvariantCulture);
+            existingProduct.Weight = Convert.ToDecimal(product.WeightValue, CultureInfo.InvariantCulture);
             existingProduct.IsMainInGroup = product.IsMainInGroup;
 
             CompatibilityAjuster(existingProduct, product.ProductInGroupId);
@@ -243,11 +249,12 @@ namespace Comifer.ADM.Services
                 Name = product.Name,
                 Code = product.Code,
                 Supply = product.Supply,
-                Weight = product.Weight,
-                Cost = product.Cost,
-                Price = product.Price,
                 IsMainInGroup = product.IsMainInGroup
             };
+
+            newProduct.Cost = Convert.ToDecimal(product.CostValue, CultureInfo.InvariantCulture);
+            newProduct.Price = Convert.ToDecimal(product.PriceValue, CultureInfo.InvariantCulture);
+            newProduct.Weight = Convert.ToDecimal(product.WeightValue, CultureInfo.InvariantCulture);
 
             CompatibilityAjuster(newProduct, product.ProductInGroupId);
 
@@ -310,6 +317,65 @@ namespace Comifer.ADM.Services
         {
             var result = _unitOfWork.Product.Get(p => p.BrandId == brandId && p.IsMainInGroup && (id == null || p.Id != id)).ToSelectList(p => p.Id.ToString(), p => p.Code);
             return result;
+        }
+
+        public ProductFastEditViewModel GetFast(Guid id)
+        {
+            var product = _unitOfWork.Product.Get(b => b.Id == id)
+                .Select(p => new ProductFastEditViewModel()
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Code = p.Code,
+                    Supply = p.Supply,
+                    Weight = p.Weight,
+                    BrandName = p.Brand.Name,
+                    ProductParent = p.ProductParent
+                })
+                .FirstOrDefault();
+            product.WeightValue = product.Weight?.ToString(CultureInfo.InvariantCulture);
+
+            var files = _unitOfWork.File.Get(f => f.ReferId == id);
+            product.HasPicture = files.Any();
+
+            return product;
+        }
+
+        public NotificationViewModel EditFast(ProductFastEditViewModel product)
+        {
+            var existingProduct = _unitOfWork.Product.Get(p => p.Id == product.Id).FirstOrDefault();
+
+            if(product.Weight != null)
+                existingProduct.Weight = Convert.ToDecimal(product.WeightValue, CultureInfo.InvariantCulture);
+
+            if(existingProduct.Supply == 0 && product.Supply != null)
+                existingProduct.Supply = product.Supply.Value;
+
+            if(product.SupplyChange != null)
+                existingProduct.Supply += product.SupplyChange.Value;
+
+            if(existingProduct.Supply < 0)
+            {
+                return new NotificationViewModel()
+                {
+                    Status = false,
+                    Title = "Erro!",
+                    Message = "O estoque não pode ser negativo.",
+                    Focus = "#search"
+                };
+            }
+
+            _unitOfWork.Product.Edit(existingProduct);
+            _unitOfWork.Commit();
+
+            _fileService.UploadFiles(product.Files, existingProduct.Id, "Product");
+            return new NotificationViewModel()
+            {
+                Status = true,
+                Title = "Sucesso!",
+                Message = "Produto editado com sucesso.",
+                Focus = "#search"
+            };
         }
     }
 }

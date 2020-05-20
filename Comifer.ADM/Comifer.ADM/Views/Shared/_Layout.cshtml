@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@{ 
+    string focusOn = null;
+}
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -105,7 +108,7 @@
             <div class="container-fluid">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Search form -->
-                    @using (Html.BeginForm("Search", "Produtos", FormMethod.Post, new { @class= "navbar-search navbar-search-light form-inline mr-sm-3", id = "navbar-search-main"}))
+                    @using (Html.BeginForm("Search", "Produtos", FormMethod.Post, new { @class = "navbar-search navbar-search-light form-inline mr-sm-3", id = "navbar-search-main" }))
                     {
                         <div class="form-group mb-0">
                             <div class="input-group input-group-alternative input-group-merge">
@@ -152,6 +155,7 @@
                     {
                         var icon = notification.Status ? "fa-check" : "fa-times";
                         var color = notification.Status ? "text-success" : "text-danger";
+                        focusOn = notification.Focus;
 
                         <div class="toast" id="notification" style="position: absolute; top: 5px; right: 5px;" data-autohide="false">
                             <div class="toast-header">
@@ -188,6 +192,9 @@
     <script>
         $(document).ready(function () {
             $("#notification").toast('show');
+            if ('@focusOn' != '') {
+                $("@focusOn").focus();
+            }
         });
     </script>
     @RenderSection("Scripts", required: false)

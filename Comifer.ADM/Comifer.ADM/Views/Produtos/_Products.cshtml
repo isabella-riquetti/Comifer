@@ -42,11 +42,14 @@
                         @item.ProductMainInGroupCode
                     </td>
                     <td class="text-right text-center">
+                        <a class="btn btn-sm btn-primary" href="@Url.Action("EditarRapido", "Produtos", new { id = @item.Id })" role="button">
+                            <i class="fas fa-edit"></i> Editar Básico
+                        </a>
                         <a class="btn btn-sm btn-outline-primary" href="@Url.Action("Editar", "Produtos", new { id = @item.Id })" role="button">
                             <i class="fas fa-edit"></i> Editar
                         </a>
                         <a class="btn btn-sm btn-outline-info" href="@Url.Action("Detalhes", "Produtos", new { id = @item.Id })" role="button">
-                            <i class="fa fa-search"></i> Detalhes
+                            <i class="fa fa-search"></i>
                         </a>
                     </td>
                 </tr>
