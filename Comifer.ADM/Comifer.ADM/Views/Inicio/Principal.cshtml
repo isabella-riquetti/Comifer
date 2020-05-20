@@ -22,7 +22,7 @@
                     <div class="row">
                         <div class="col">
                             <h5 class="card-title text-uppercase text-muted mb-0">Clientes</h5>
-                            <span class="h2 font-weight-bold mb-0">@Model.Customers.CurrentValue</span>
+                            <span class="h2 font-weight-bold mb-0">@Model.Customers.CurrentValue.ToString("N0")</span>
                         </div>
                         <div class="col-auto">
                             <div class="icon icon-shape bg-gradient-blue text-white rounded-circle shadow">
@@ -43,7 +43,7 @@
                     <div class="row">
                         <div class="col">
                             <h5 class="card-title text-uppercase text-muted mb-0">Vistas Explodidas</h5>
-                            <span class="h2 font-weight-bold mb-0">@Model.ProductParents.CurrentValue</span>
+                            <span class="h2 font-weight-bold mb-0">@Model.ProductParents.CurrentValue.ToString("N0")</span>
                         </div>
                         <div class="col-auto">
                             <div class="icon icon-shape bg-gradient-orange text-white rounded-circle shadow">
@@ -64,7 +64,7 @@
                     <div class="row">
                         <div class="col">
                             <h5 class="card-title text-uppercase text-muted mb-0">Produtos</h5>
-                            <span class="h2 font-weight-bold mb-0">@Model.Products.CurrentValue</span>
+                            <span class="h2 font-weight-bold mb-0">@Model.Products.CurrentValue.ToString("N0")</span>
                         </div>
                         <div class="col-auto">
                             <div class="icon icon-shape bg-gradient-primary text-white rounded-circle shadow">
@@ -85,7 +85,7 @@
                     <div class="row">
                         <div class="col">
                             <h5 class="card-title text-uppercase text-muted mb-0">Produtos p/ Venda</h5>
-                            <span class="h2 font-weight-bold mb-0">@Model.FilledProducts.CurrentValue</span>
+                            <span class="h2 font-weight-bold mb-0">@Model.FilledProducts.CurrentValue.ToString("N0")</span>
                         </div>
                         <div class="col-auto">
                             <div class="icon icon-shape bg-gradient-success text-white rounded-circle shadow">

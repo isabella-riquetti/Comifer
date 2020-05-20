@@ -77,17 +77,12 @@ var Layout = (function() {
       })
     }
 
-
-
     $("body").on("click", "[data-action]", function(e) {
-
         e.preventDefault();
 
         var $this = $(this);
         var action = $this.data('action');
         var target = $this.data('target');
-
-
         // Manage actions
 
         switch (action) {
@@ -129,10 +124,15 @@ var Layout = (function() {
                 }, 500);
             break;
         }
-    })
+	})
 
+	$(window).click(function () {
+		unpinSidenav();
+	});
 
-    // Add sidenav modifier classes on mouse events
+	$('.sidenav').click(function (event) {
+		event.stopPropagation();
+	});
 
     $('.sidenav').on('mouseenter', function() {
         if(! $('body').hasClass('g-sidenav-pinned')) {
@@ -141,7 +141,7 @@ var Layout = (function() {
     })
 
     $('.sidenav').on('mouseleave', function() {
-        if(! $('body').hasClass('g-sidenav-pinned')) {
+        if($('body').hasClass('g-sidenav-pinned')) {
             $('body').removeClass('g-sidenav-show').addClass('g-sidenav-hide');
 
             setTimeout(function() {
@@ -149,7 +149,6 @@ var Layout = (function() {
             }, 300);
         }
     })
-
 
     // Make the body full screen size if it has not enough content inside
     $(window).on('load resize', function() {

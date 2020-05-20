@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Comifer.ADM.Services;
 using Comifer.ADM.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -21,15 +22,46 @@ namespace Comifer.ADM.Controllers
             _categoryService = categoryService;
         }
 
-        public IActionResult Principal(Guid? idVistaExplodida, Guid? idMarca)
+        public IActionResult Principal(Guid? idVistaExplodida, Guid? idMarca, string text = "")
         {
             ViewBag.BrandId = idMarca;
             ViewBag.Brands = _brandService.GetSelectListWithAll();
             ViewBag.ProductId = idVistaExplodida;
             ViewBag.ProductParents = _productParentService.GetSelectListWithAll();
+            ViewBag.Text = text;
 
-            var products = _productService.GetAll(idVistaExplodida, idMarca);
-            return View(products);
+            if (idMarca == null && idVistaExplodida == null && String.IsNullOrEmpty(text))
+            {   
+                if(ModelState.ContainsKey("idMarca"))
+                    ModelState["idMarca"].Errors.Clear();
+                if (ModelState.ContainsKey("idVistaExplodida"))
+                    ModelState["idVistaExplodida"].Errors.Clear();
+                if (ModelState.ContainsKey("idVistaExplodida"))
+                    ModelState["text"].Errors.Clear();
+
+                ModelState.AddModelError("idMarca", "É necessário informar ao menos um filtro para busca");
+                ModelState.AddModelError("idVistaExplodida", "É necessário informar ao menos um filtro para busca");
+                ModelState.AddModelError("text", "É necessário informar ao menos um filtro para busca");
+
+                return View(new List<DetailedProductViewModel>());
+            }
+            else
+            {
+                if (ModelState.ContainsKey("idMarca"))
+                    ModelState["idMarca"].Errors.Clear();
+                if (ModelState.ContainsKey("idVistaExplodida"))
+                    ModelState["idVistaExplodida"].Errors.Clear();
+                if (ModelState.ContainsKey("idVistaExplodida"))
+                    ModelState["text"].Errors.Clear();
+
+                var products = _productService.GetAll(idVistaExplodida, idMarca, text);
+                return View(products);
+            }
+        }
+
+        public ActionResult Search(string search)
+        {
+            return RedirectToAction("Principal", new { text = search });
         }
 
         public IActionResult Detalhes(Guid id)

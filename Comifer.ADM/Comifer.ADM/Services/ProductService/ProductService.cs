@@ -45,12 +45,18 @@ namespace Comifer.ADM.Services
             };
         }
 
-        public List<DetailedProductViewModel> GetAll(Guid? productParentId, Guid? brandId)
+        public List<DetailedProductViewModel> GetAll(Guid? productParentId, Guid? brandId, string text)
         {
-            var products = _unitOfWork.Product
-                .Get(b => (brandId == null || b.BrandId == brandId)
-                && (productParentId == null || b.ProductParentId == productParentId))
-                .Select(p => new DetailedProductViewModel()
+            var products = _unitOfWork.Product.Get();
+
+            if (brandId != null)
+                products = products.Where(b => b.BrandId == brandId); 
+            if (productParentId != null)
+                products = products.Where(b => b.ProductParentId == productParentId); 
+            if (!string.IsNullOrEmpty(text))
+                products = products.Where(b => b.Code.Contains(text) || b.Name.Contains(text)); 
+                                        
+            var formatedProducts = products.Select(p => new DetailedProductViewModel()
                 {
                     Id = p.Id,
                     Name = p.Name,
@@ -67,14 +73,14 @@ namespace Comifer.ADM.Services
                 .OrderBy(b => b.Name)
                 .ToList();
 
-            var groups = products.Where(p => p.ProductGroupId != null).Select(p => p.ProductGroupId).Distinct().ToList();
+            var groups = formatedProducts.Where(p => p.ProductGroupId != null).Select(p => p.ProductGroupId).Distinct().ToList();
             var compatibles = _unitOfWork.Product
                 .Get(pg => groups.Contains(pg.ProductGroupId) && pg.IsMainInGroup)
                 .GroupBy(pg => pg.ProductGroupId.Value)
                 .ToDictionary(pg => pg.Key, pg => pg.FirstOrDefault()?.Code);
 
-            products.ForEach(p => p.ProductMainInGroupCode = (p.ProductGroupId == null ? null : compatibles[p.ProductGroupId.Value]));
-            return products;
+            formatedProducts.ForEach(p => p.ProductMainInGroupCode = (p.ProductGroupId == null ? null : compatibles[p.ProductGroupId.Value]));
+            return formatedProducts;
         }
 
         public DetailedProductViewModel GetDetailed(Guid id)

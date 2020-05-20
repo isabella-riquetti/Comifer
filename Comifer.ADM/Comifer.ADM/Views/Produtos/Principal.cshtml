@@ -25,19 +25,26 @@
         <div class="card-header border-0">
             @using (@Html.BeginForm("Principal", "Produtos"))
             {
-                <div class="row filter">
-                    <div class="col-6 pb-2">
-                        <label for="ProviderId">Marca:</label>
-                        @Html.DropDownList("idMarca", new List<SelectListItem>(ViewBag.Brands), new { @class = "form-control" })
-                    </div>
-                    <div class="col-6 pb-2">
-                        <label for="ProviderId">Vista Explodida:</label>
-                        @Html.DropDownList("idVistaExplodida", new List<SelectListItem>(ViewBag.ProductParents), new { @class = "form-control" })
-                    </div>
-                    <div class="col-12">
-                        <button type="submit" class="btn btn-primary pull-right">Filtrar</button>
-                    </div>
+            <div class="row filter">
+                <div class="col-4 pb-2">
+                    <label for="ProviderId">Código ou Nome:</label>
+                    @Html.TextBox("text", ViewBag.Text ?? "", "", new { @class = "form-control", placeholder="Nome ou Código" })
+                    @Html.ValidationMessage("text")
                 </div>
+                <div class="col-4 pb-2">
+                    <label for="ProviderId">Marca:</label>
+                    @Html.DropDownList("idMarca", new List<SelectListItem>(ViewBag.Brands), new { @class = "form-control" })
+                    @Html.ValidationMessage("idMarca")
+                </div>
+                <div class="col-4 pb-2">
+                    <label for="ProviderId">Vista Explodida:</label>
+                    @Html.DropDownList("idVistaExplodida", new List<SelectListItem>(ViewBag.ProductParents), new { @class = "form-control" })
+                    @Html.ValidationMessage("idVistaExplodida")
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary pull-right">Filtrar</button>
+                </div>
+            </div>
             }
             <h3 class="mb-0">Lista</h3>
         </div>

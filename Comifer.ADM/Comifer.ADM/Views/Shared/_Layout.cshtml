@@ -39,25 +39,25 @@
                         </li>
                     </ul>
 
-                    <hr class="my-3">
+                    @*<hr class="my-3">
 
-                    <h6 class="navbar-heading p-0 text-muted">
-                        <span class="docs-normal">Vendas</span>
-                    </h6>
-                    <ul class="navbar-nav mb-md-3">
-                        <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("Principal", "Clientes")">
-                                <i class="fa fa-users text-blue"></i>
-                                <span class="nav-link-text">Clientes</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("Principal", "Pedidos")">
-                                <i class="fa fa-hand-holding-usd text-green"></i>
-                                <span class="nav-link-text">Pedidos</span>
-                            </a>
-                        </li>
-                    </ul>
+                        <h6 class="navbar-heading p-0 text-muted">
+                            <span class="docs-normal">Vendas</span>
+                        </h6>
+                        <ul class="navbar-nav mb-md-3">
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("Principal", "Clientes")">
+                                    <i class="fa fa-users text-blue"></i>
+                                    <span class="nav-link-text">Clientes</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("Principal", "Pedidos")">
+                                    <i class="fa fa-hand-holding-usd text-green"></i>
+                                    <span class="nav-link-text">Pedidos</span>
+                                </a>
+                            </li>
+                        </ul>*@
 
                     <hr class="my-3">
 
@@ -101,7 +101,45 @@
         </div>
     </nav>
     <div class="main-content" id="panel" style="position: relative">
-
+        <nav class="navbar navbar-top navbar-expand navbar-dark bg-primary border-bottom">
+            <div class="container-fluid">
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <!-- Search form -->
+                    @using (Html.BeginForm("Search", "Produtos", FormMethod.Post, new { @class= "navbar-search navbar-search-light form-inline mr-sm-3", id = "navbar-search-main"}))
+                    {
+                        <div class="form-group mb-0">
+                            <div class="input-group input-group-alternative input-group-merge">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-search"></i></span>
+                                </div>
+                                <input class="form-control" name="search" id="search" placeholder="Produto..." type="text">
+                            </div>
+                        </div>
+                        <button type="button" class="close" data-action="search-close" data-target="#navbar-search-main" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    }
+                    <!-- Navbar links -->
+                    <ul class="navbar-nav align-items-center  ml-md-auto ">
+                        <li class="nav-item d-xl-none">
+                            <!-- Sidenav toggler -->
+                            <div class="pr-3 sidenav-toggler sidenav-toggler-dark" data-action="sidenav-pin" data-target="#sidenav-main">
+                                <div class="sidenav-toggler-inner">
+                                    <i class="sidenav-toggler-line"></i>
+                                    <i class="sidenav-toggler-line"></i>
+                                    <i class="sidenav-toggler-line"></i>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="nav-item d-sm-none">
+                            <a class="nav-link" href="#" data-action="search-show" data-target="#navbar-search-main">
+                                <i class="ni ni-zoom-split-in"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
         <!-- Header -->
         <div class="header bg-primary pb-6">
             <div class="container-fluid">
