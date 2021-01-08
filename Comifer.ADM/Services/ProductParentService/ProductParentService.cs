@@ -126,7 +126,7 @@ namespace Comifer.ADM.Services
                 BrandId = product.BrandId,
                 CategoryId = product.CategoryId,
                 Name = product.Name,
-                Code = product.Code                
+                Code = product.Code
             };
             _unitOfWork.ProductParent.Add(newProductParent);
             _unitOfWork.Commit();

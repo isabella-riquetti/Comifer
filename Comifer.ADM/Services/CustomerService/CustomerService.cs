@@ -22,7 +22,7 @@ namespace Comifer.ADM.Services
             var lastMonth = DateTime.Now.AddMonths(-1);
             var sinceLastMonth = customersRegisteredOn.Where(c => c < lastMonth).Count();
             var fromAllTime = customersRegisteredOn.Count();
-            if(sinceLastMonth == 0)
+            if (sinceLastMonth == 0)
             {
                 return new DashboardItemViewModel()
                 {

@@ -1,6 +1,6 @@
-﻿using System;
-using Comifer.ADM.Services;
+﻿using Comifer.ADM.Services;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace Comifer.ADM.Controllers
 {

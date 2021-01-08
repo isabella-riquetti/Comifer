@@ -51,26 +51,26 @@ namespace Comifer.ADM.Services
             var products = _unitOfWork.Product.Get();
 
             if (brandId != null)
-                products = products.Where(b => b.BrandId == brandId); 
+                products = products.Where(b => b.BrandId == brandId);
             if (productParentId != null)
-                products = products.Where(b => b.ProductParentId == productParentId); 
+                products = products.Where(b => b.ProductParentId == productParentId);
             if (!string.IsNullOrEmpty(text))
-                products = products.Where(b => b.Code.Contains(text) || b.Name.Contains(text)); 
-                                        
+                products = products.Where(b => b.Code.Contains(text) || b.Name.Contains(text));
+
             var formatedProducts = products.Select(p => new DetailedProductViewModel()
-                {
-                    Id = p.Id,
-                    Name = p.Name,
-                    Code = p.Code,
-                    Price = p.Price,
-                    Supply = p.Supply,
-                    Weight = p.Weight,
-                    ProductGroupId = p.ProductGroupId,
-                    BrandId = p.BrandId,
-                    Brand = p.Brand,
-                    ProductParentId = p.ProductParentId,
-                    ProductParent = p.ProductParent
-                })
+            {
+                Id = p.Id,
+                Name = p.Name,
+                Code = p.Code,
+                Price = p.Price,
+                Supply = p.Supply,
+                Weight = p.Weight,
+                ProductGroupId = p.ProductGroupId,
+                BrandId = p.BrandId,
+                Brand = p.Brand,
+                ProductParentId = p.ProductParentId,
+                ProductParent = p.ProductParent
+            })
                 .OrderBy(b => b.Name)
                 .ToList();
 
@@ -285,7 +285,7 @@ namespace Comifer.ADM.Services
                     compatibleProduct.IsMainInGroup = !newProduct.IsMainInGroup;
                     _unitOfWork.Product.Edit(compatibleProduct);
                 }
-                else if(newProduct.IsMainInGroup && compatibleProduct.IsMainInGroup)
+                else if (newProduct.IsMainInGroup && compatibleProduct.IsMainInGroup)
                 {
                     newProduct.ProductGroupId = compatibleProduct.ProductGroupId;
 
@@ -345,16 +345,16 @@ namespace Comifer.ADM.Services
         {
             var existingProduct = _unitOfWork.Product.Get(p => p.Id == product.Id).FirstOrDefault();
 
-            if(product.Weight != null)
+            if (product.Weight != null)
                 existingProduct.Weight = Convert.ToDecimal(product.WeightValue, CultureInfo.InvariantCulture);
 
-            if(existingProduct.Supply == 0 && product.Supply != null)
+            if (existingProduct.Supply == 0 && product.Supply != null)
                 existingProduct.Supply = product.Supply.Value;
 
-            if(product.SupplyChange != null)
+            if (product.SupplyChange != null)
                 existingProduct.Supply += product.SupplyChange.Value;
 
-            if(existingProduct.Supply < 0)
+            if (existingProduct.Supply < 0)
             {
                 return new NotificationViewModel()
                 {

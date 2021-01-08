@@ -1,7 +1,6 @@
-﻿using System;
-using Comifer.ADM.Services;
-using Comifer.ADM.ViewModels;
+﻿using Comifer.ADM.Services;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace Comifer.ADM.Controllers
 {
@@ -53,7 +52,7 @@ namespace Comifer.ADM.Controllers
         [HttpPost]
         public IActionResult Editar(Data.Models.Category categoria)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return View(categoria);
             }

@@ -1,8 +1,7 @@
-﻿using System;
-using Comifer.ADM.Services;
+﻿using Comifer.ADM.Services;
 using Comifer.ADM.ViewModels;
-using Comifer.Data.Models;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace Comifer.ADM.Controllers
 {
@@ -25,7 +24,7 @@ namespace Comifer.ADM.Controllers
             ViewBag.Categories = _categoryService.GetSelectListWithAll();
             ViewBag.BrandId = idMarca;
             ViewBag.Brands = _brandService.GetSelectListWithAll();
-            
+
             var productParents = _productParentService.GetAll(idMarca, idCategoria);
             return View(productParents);
         }

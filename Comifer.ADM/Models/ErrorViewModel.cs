@@ -1,5 +1,3 @@
-using System;
-
 namespace Comifer.ADM.Models
 {
     public class ErrorViewModel
