@@ -1,0 +1,65 @@
+﻿@model List<Comifer.ADM.ViewModels.DetailedProductViewModel>
+@{
+    Layout = null;
+}
+<div class="table-responsive">
+    <table class="table align-items-center table-flush">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col" class="sort" data-sort="names">Nome</th>
+                <th scope="col" class="sort text-center" data-sort="codes">Código</th>
+                <th scope="col" class="sort text-center" data-sort="price">Preço</th>
+                <th scope="col" class="sort text-center" data-sort="supply">Estoque</th>
+                <th scope="col" class="sort text-center" data-sort="brands">Marcas</th>
+                <th scope="col" class="sort text-center" data-sort="productParents">Vista Explodida</th>
+                <th scope="col" class="sort text-center" data-sort="productGroupss">Grupo de Compatibilidade</th>
+                <th scope="col" class="text-center" width="200px">Ações</th>
+            </tr>
+        </thead>
+        <tbody class="list">
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="names">
+                        @item.Name
+                    </td>
+                    <td class="codes text-center">
+                        @item.Code
+                    </td>
+                    <td class="price text-center">
+                        @item.Price
+                    </td>
+                    <td class="supply text-center">
+                        @item.Supply
+                    </td>
+                    <td class="brands text-center">
+                        @item.BrandName
+                    </td>
+                    <td class="products text-center">
+                        @item.ProductParentName
+                    </td>
+                    <td class="products text-center">
+                        @item.ProductMainInGroupCode
+                    </td>
+                    <td class="text-right text-center">
+                        <a class="btn btn-sm btn-primary" href="@Url.Action("EditarRapido", "Produtos", new { id = @item.Id })" role="button">
+                            <i class="fas fa-edit"></i> Editar Básico
+                        </a>
+                        <a class="btn btn-sm btn-outline-primary" href="@Url.Action("Editar", "Produtos", new { id = @item.Id })" role="button">
+                            <i class="fas fa-edit"></i> Editar
+                        </a>
+                        <a class="btn btn-sm btn-outline-info" href="@Url.Action("Detalhes", "Produtos", new { id = @item.Id })" role="button">
+                            <i class="fa fa-search"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts {
+    <script>
+        $("table").dataTable();
+    </script>
+}

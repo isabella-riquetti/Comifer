@@ -1,0 +1,144 @@
+﻿@model Comifer.ADM.ViewModels.ProductFastEditViewModel
+@{
+    ViewData["Title"] = "Editar Produto Rápido";
+}
+@section header {
+    <div class="row align-items-center py-4">
+        <div class="col-lg-6 col-7">
+            <h6 class="h2 text-white d-inline-block mb-0">Produtos</h6>
+            <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                    <li class="breadcrumb-item"><a href="@Url.Action("Principal", "Inicio")"><i class="fas fa-home"></i> Inicio</a></li>
+                    <li class="breadcrumb-item"><a href="@Url.Action("Principal", "Produtos")">Produto</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Editar Rápido</li>
+                </ol>
+            </nav>
+        </div>
+        <div class="col-lg-6 col-5 text-right">
+            <a href="@Url.Action("Principal","Produtos")" class="btn btn-sm btn-neutral">Lista de Produtos</a>
+        </div>
+    </div>
+}
+
+<div class="col-xl-12 order-xl-1">
+    <div class="card">
+        <div class="card-header">
+            <div class="row align-items-center">
+                <div class="col-8">
+                    <h3 class="mb-0">Editar Rápido</h3>
+                </div>
+                <div class="col-4">
+                    <a href="@Url.Action("Editar", "Produtos", new { id = Model.Id })" class="btn btn-primary btn-sm pull-right">
+                        <i class="fa fa-edit"></i> Editar +
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            @using (@Html.BeginForm("EditarRapido", "Produtos", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.HiddenFor(m => m.Name)
+                @Html.HiddenFor(m => m.Code)
+                @Html.HiddenFor(m => m.BrandName)
+                @Html.HiddenFor(m => m.ProductParentName)
+                @Html.HiddenFor(m => m.HasPicture)
+            <div class="row">
+                <div class="col-6 form-group detailment">
+                    @Html.LabelFor(m => m.Name)
+                    @Html.DisplayFor(m => m.Name)
+                </div>
+                <div class="col-6 form-group detailment">
+                    @Html.LabelFor(m => m.Code)
+                    @Html.DisplayFor(m => m.Code)
+                </div>
+                <div class="col-6 form-group detailment">
+                    @Html.LabelFor(m => m.BrandName)
+                    @Html.DisplayFor(m => m.BrandName)
+                </div>
+                <div class="col-6 form-group detailment">
+                    @Html.LabelFor(m => m.ProductParentName)
+                    @Html.DisplayFor(m => m.ProductParentName)
+                </div>
+                @if (Model.Supply == 0)
+                {
+                    <div class="col-6 form-group">
+                        @Html.LabelFor(m => m.Supply)
+                        @Html.TextBoxFor(m => m.Supply, new { @class = "form-control", placeholder = "Estoque", type = "number", step = "1" })
+                        @Html.ValidationMessageFor(m => m.Supply)
+                    </div>
+                }
+                else
+                {
+                    @Html.HiddenFor(m => m.Supply)
+                    <div class="col-2 form-group detailment">
+                        @Html.Label("Estoque atual")
+                        @Html.TextBox("EstoqueAtual", Model.Supply, new { @class = "form-control", placeholder = "Atualizado", @disabled = "disabled" })
+                        @Html.ValidationMessageFor(m => m.SupplyChange)
+                    </div>
+                    <div class="col-2 form-group">
+                        @Html.LabelFor(m => m.SupplyChange)
+                        @Html.TextBoxFor(m => m.SupplyChange, new { @class = "form-control", placeholder = "Mudança no Estoque", type = "number", step = "1" })
+                        @Html.ValidationMessageFor(m => m.SupplyChange)
+                    </div>
+                    <div class="col-2 form-group detailment">
+                        @Html.Label("Atualizado")
+                        @Html.TextBox("SupplyUpdated", Model.Supply, new { @class = "form-control", placeholder = "Atualizado", @disabled = "disabled" })
+                        @Html.ValidationMessageFor(m => m.SupplyChange)
+                    </div>
+                }
+                <div class="col-6 form-group">
+                    @Html.LabelFor(m => m.Weight)
+                    @Html.TextBoxFor(m => m.WeightValue, new { @class = "form-control", placeholder = "Peso", type = "number", step = "0.001" })
+                    @Html.ValidationMessageFor(m => m.Weight)
+                </div>
+                <div class="col-2 form-group detailment">
+                    @Html.LabelFor(m => m.HasPicture)
+                    @if (Model.HasPicture)
+                    {
+                        <i class="fa fa-check text-success mr-1"></i><span>Sim</span>
+                    }
+                    else
+                    {
+                        <i class="fa fa-times text-danger mr-1"></i><span>Não</span>
+                    }
+                    <br />
+                </div>
+                <div class="col-10 form-group">
+                    @Html.LabelFor(m => m.Files)
+                    <input type="file" name="Files" id="Files" class="form-control" multiple />
+                </div>
+            </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <button type="submit" class="btn btn-primary pull-right">Salvar</button>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+
+        $(document).ready(function () {
+            var field = $("#Supply");
+            if (field.css("display") == "none") {
+                field = $("#SupplyChange");
+            }
+            field.select();
+        });
+
+        $(document).on("blur", "#Cost", function () {
+            var cost = $(this).val();
+            if (cost != null && cost != "") {
+                $("#Price").val(cost * 2);
+            }
+        });
+
+        $("#SupplyChange").on("change", function () {
+            $("#SupplyUpdated").val(@Model.Supply + parseInt($(this).val()));
+        });
+    </script>
+}

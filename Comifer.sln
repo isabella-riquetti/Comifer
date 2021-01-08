@@ -1,0 +1,48 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29926.136
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Comifer.ADM", "Comifer.ADM\Comifer.ADM.csproj", "{948D6A6A-912F-4404-AEBD-035F03E1AD27}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Administrative", "Administrative", "{83FA99DE-4F47-413A-B6BA-47467C3E9EAA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EDM", "EDM", "{34898B37-A255-4AED-B2EF-8526B379DCFF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Commerce", "Commerce", "{640689CE-27EC-49DB-8D6B-B941915284D4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Comifer.Data", "Comifer.Data\Comifer.Data.csproj", "{653781A2-F4DC-4A99-91F7-E72191658275}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Comifer.Data.Test", "Comifer.Data.Test\Comifer.Data.Test.csproj", "{86EC06FC-5CDC-43EB-9ABF-4314ED8FA417}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{948D6A6A-912F-4404-AEBD-035F03E1AD27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{948D6A6A-912F-4404-AEBD-035F03E1AD27}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{948D6A6A-912F-4404-AEBD-035F03E1AD27}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{948D6A6A-912F-4404-AEBD-035F03E1AD27}.Release|Any CPU.Build.0 = Release|Any CPU
+		{653781A2-F4DC-4A99-91F7-E72191658275}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{653781A2-F4DC-4A99-91F7-E72191658275}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{653781A2-F4DC-4A99-91F7-E72191658275}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{653781A2-F4DC-4A99-91F7-E72191658275}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86EC06FC-5CDC-43EB-9ABF-4314ED8FA417}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86EC06FC-5CDC-43EB-9ABF-4314ED8FA417}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86EC06FC-5CDC-43EB-9ABF-4314ED8FA417}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86EC06FC-5CDC-43EB-9ABF-4314ED8FA417}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{948D6A6A-912F-4404-AEBD-035F03E1AD27} = {83FA99DE-4F47-413A-B6BA-47467C3E9EAA}
+		{653781A2-F4DC-4A99-91F7-E72191658275} = {34898B37-A255-4AED-B2EF-8526B379DCFF}
+		{86EC06FC-5CDC-43EB-9ABF-4314ED8FA417} = {34898B37-A255-4AED-B2EF-8526B379DCFF}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A909D335-B5AC-4058-9984-6CA56BFBBE94}
+	EndGlobalSection
+EndGlobal
